@@ -1,21 +1,28 @@
 import animateRAFInterval from "./utils/animateRAFInterval";
-console.log("Hello, Webpack!");
+import getDirection from "./utils/getDirection";
 
-class Test {
-    constructor(){
-        this.name = "Dima";
-    }
+// console.log("Hello, Webpack!");
 
-    getName() {
-        console.log(this.name);
-    }
-}
+// class Test {
+//     constructor(){
+//         this.name = "Dima";
+//     }
 
-new Test().getName();
+//     getName() {
+//         console.log(this.name);
+//     }
+// }
 
-animateRAFInterval.fn((time) => {
-    console.log(time);
-}, 1000);
+// new Test().getName();
+
+// animateRAFInterval.fn((time) => {
+//     console.log(time);
+// }, 1000);
 
 
-console.log("Bye, Webpack!");
+// console.log("Bye, Webpack!");
+
+document.addEventListener("keydown", (e) => {
+    console.log(e);
+    console.log(getDirection(e.keyCode));
+});
