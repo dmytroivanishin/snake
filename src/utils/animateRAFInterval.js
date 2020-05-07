@@ -1,4 +1,4 @@
-export const animateRAFInterval = {
+const animateRAFInterval = {
     id: null,
     fn: null,
 };
@@ -41,3 +41,5 @@ const fnRAFInterval = (cb, time = 1) => {
 };
 
 animateRAFInterval.fn = fnRAFInterval;
+
+export default animateRAFInterval;

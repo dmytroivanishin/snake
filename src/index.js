@@ -1,4 +1,4 @@
-import { animateRAFInterval } from "./utils/animateRAFInterval";
+import animateRAFInterval from "./utils/animateRAFInterval";
 console.log("Hello, Webpack!");
 
 class Test {
