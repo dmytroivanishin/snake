@@ -1,4 +1,4 @@
-
+import { animateRAFInterval } from "./utils/animateRAFInterval";
 console.log("Hello, Webpack!");
 
 class Test {
@@ -12,5 +12,10 @@ class Test {
 }
 
 new Test().getName();
+
+animateRAFInterval.fn((time) => {
+    console.log(time);
+}, 1000);
+
 
 console.log("Bye, Webpack!");
