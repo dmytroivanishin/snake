@@ -1,28 +1,22 @@
 import animateRAFInterval from "./utils/animateRAFInterval";
-import getDirection from "./utils/getDirection";
+import moveSnake from "./utils/moveSnake";
 
-// console.log("Hello, Webpack!");
+const state = {
+    snake: [
+        {x: 0, y: 0, d: "right", h: false},
+        {x: 1, y: 0, d: "right", h: false},
+        {x: 2, y: 0, d: "right", h: false},
+        {x: 3, y: 0, d: "right", h: true}
+    ]
+};
 
-// class Test {
-//     constructor(){
-//         this.name = "Dima";
-//     }
+window.addEventListener("load", () => {
+    
+    document.addEventListener("keydown", (e) => {
 
-//     getName() {
-//         console.log(this.name);
-//     }
-// }
+        moveSnake(e.keyCode, state.snake)
+        console.dir(state.snake);
 
-// new Test().getName();
+    });
 
-// animateRAFInterval.fn((time) => {
-//     console.log(time);
-// }, 1000);
-
-
-// console.log("Bye, Webpack!");
-
-document.addEventListener("keydown", (e) => {
-    console.log(e);
-    console.log(getDirection(e.keyCode));
 });
