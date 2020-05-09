@@ -38,28 +38,6 @@ export const setDirection = (keyCode, snake) => {
     else{
         snake.direction = lastDirection;
     }
-    
-    
-
-    //console.log(hasSetDirection(snake));
-
-    // if(hasSetDirection(snake)) {
-    //     snake.direction = direction;
-    // }    
-    // if(direction === "left" && head.d !== "right"){
-    //     return { x: head.x - 1, y: head.y, d: direction, h: true };
-    // }
-    // if(direction === "right" && head.d !== "left"){
-    //     return { x: head.x + 1, y: head.y, d: direction, h: true };
-    // }
-    // if(direction === "up" && head.d !== "down"){
-    //     return { x: head.x, y: head.y + 1, d: direction, h: true };
-    // }
-    // if(direction === "down" && head.d !== "up"){
-    //     return { x: head.x, y: head.y - 1, d: direction, h: true };
-    // }
-
-    // return false;
 };
 
 export default (snake) => {

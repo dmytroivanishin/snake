@@ -1,9 +1,16 @@
 const animateRAFInterval = {
     id: null,
-    fn: null,
+    start: null,
+    cancel() {
+        if(!this.id){
+            return false;
+        }
+        cancelAnimationFrame(this.id);
+        this.id = null;
+    }
 };
 
-const fnRAFInterval = (cb, time = 1) => {
+const startRAFInterval = (cb, time = 1) => {
 
     if(!cb){
         throw new Error("Callback function is undefined.");
@@ -40,6 +47,6 @@ const fnRAFInterval = (cb, time = 1) => {
     
 };
 
-animateRAFInterval.fn = fnRAFInterval;
+animateRAFInterval.start = startRAFInterval;
 
 export default animateRAFInterval;

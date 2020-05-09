@@ -13,7 +13,7 @@ const state = {
     }
 };
 
-window.addEventListener("load", () => {
+//window.addEventListener("load", () => {
     
     document.addEventListener("keydown", (e) => {
 
@@ -23,9 +23,21 @@ window.addEventListener("load", () => {
         
     });
 
-});
+//});
 
-// animateRAFInterval.fn(() => {
-//     moveSnake(state.snake);
-//     console.dir(state.snake.direction, state.snake.tail);
-// }, 2000)
+console.log(animateRAFInterval.cancel());
+
+animateRAFInterval.start((time) => {
+    moveSnake(state.snake);
+    console.dir(state.snake);
+}, 1000);
+
+//animateRAFInterval.cancel();
+
+setTimeout(() => {
+    animateRAFInterval.cancel();
+}, 5500);
+
+setTimeout(() => {
+    console.log(animateRAFInterval.cancel());
+}, 6000);
