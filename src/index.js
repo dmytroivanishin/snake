@@ -1,22 +1,31 @@
 import animateRAFInterval from "./utils/animateRAFInterval";
-import moveSnake from "./utils/moveSnake";
+import moveSnake, { setDirection } from "./utils/moveSnake";
 
 const state = {
-    snake: [
-        {x: 0, y: 0, d: "right", h: false},
-        {x: 1, y: 0, d: "right", h: false},
-        {x: 2, y: 0, d: "right", h: false},
-        {x: 3, y: 0, d: "right", h: true}
-    ]
+    snake: {
+        tail: [
+            {x: 0, y: 0, d: "right", h: false},
+            {x: 1, y: 0, d: "right", h: false},
+            {x: 2, y: 0, d: "right", h: false},
+            {x: 3, y: 0, d: "right", h: true}
+        ],
+        direction: "right"
+    }
 };
 
 window.addEventListener("load", () => {
     
     document.addEventListener("keydown", (e) => {
 
-        moveSnake(e.keyCode, state.snake)
-        console.dir(state.snake);
-
+        setDirection(e.keyCode, state.snake);
+        moveSnake(state.snake)
+        console.dir(state.snake.direction, state.snake.tail);
+        
     });
 
 });
+
+// animateRAFInterval.fn(() => {
+//     moveSnake(state.snake);
+//     console.dir(state.snake.direction, state.snake.tail);
+// }, 2000)
