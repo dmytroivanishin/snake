@@ -1,13 +1,4 @@
-const mapCode = (keyCode) => {
-    let direction = {
-        37: "left",
-        38: "up",
-        39: "right",
-        40: "down"
-    };
-
-    return direction[keyCode];
-}
+import { mapKeyCode } from './utils';
 
 const getHeadSnake = (snake) => {
     return snake.tail[snake.tail.length - 1];
@@ -19,12 +10,6 @@ const hasDirection = (snake, direction) => {
     if(direction === headSnake.d){
         return false;
     }
-
-    return true;
-};
-
-const hasSetDirection = (snake, direction) => {
-    const headSnake = getHeadSnake(snake);
 
     if(
         (direction === "left" && headSnake.d !== "right") ||
@@ -42,7 +27,6 @@ export const moveSnake = (snake) => {
     const headSnake = getHeadSnake(snake);
     const direction = snake.direction;
     let newMovementSnake;
-
     
     if(direction === "left"){
         newMovementSnake =  { x: headSnake.x - 1, y: headSnake.y, d: direction, h: true };
@@ -51,10 +35,10 @@ export const moveSnake = (snake) => {
         newMovementSnake =  { x: headSnake.x + 1, y: headSnake.y, d: direction, h: true };
     }
     if(direction === "up"){
-        newMovementSnake =  { x: headSnake.x, y: headSnake.y + 1, d: direction, h: true };
+        newMovementSnake =  { x: headSnake.x, y: headSnake.y - 1, d: direction, h: true };
     }
     if(direction === "down"){
-        newMovementSnake =  { x: headSnake.x, y: headSnake.y - 1, d: direction, h: true };
+        newMovementSnake =  { x: headSnake.x, y: headSnake.y + 1, d: direction, h: true };
     }
 
     if(!newMovementSnake){
@@ -66,17 +50,10 @@ export const moveSnake = (snake) => {
     snake.tail.push(newMovementSnake);
 };
 
-
-
 export const changeDirection = (keyCode, snake) => {
-    const direction = mapCode(keyCode);
-    const lastDirection = snake.direction;
+    const direction = mapKeyCode(keyCode);
 
-    if(!hasDirection(snake, direction)){
-        return false;
-    }
-
-    if(hasSetDirection(snake, direction)) {
+    if(hasDirection(snake, direction)) {
         snake.direction = direction;
     }
     else{
@@ -84,6 +61,4 @@ export const changeDirection = (keyCode, snake) => {
     }
 
     moveSnake(snake);
-
 };
-
