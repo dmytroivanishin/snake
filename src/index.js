@@ -13,8 +13,23 @@ const state = {
     }
 };
 
-//window.addEventListener("load", () => {
-    
+
+window.addEventListener("load", () => {
+
+    const canvas = document.getElementById("game-field");
+    const ctx = canvas.getContext("2d");
+
+    // console.log(ctx);
+
+    // ctx.fillStyle = "blue";
+    // ctx.beginPath();
+    // ctx.moveTo(6 - (20 / 2), 6 - (20 / 2));
+    // ctx.lineTo(6 + (20 / 2), 6 - (20 / 2));
+    // ctx.lineTo(6 + (20 / 2), 6 + (20 / 2));
+    // ctx.lineTo(6 - (20 / 2), 6 + (20 / 2));
+    // ctx.closePath();
+    // ctx.fill();
+
     document.addEventListener("keydown", (e) => {
 
         setDirection(e.keyCode, state.snake);
@@ -23,21 +38,12 @@ const state = {
         
     });
 
-//});
+    // animateRAFInterval.start((time) => {
+    //     moveSnake(state.snake);
+    //     console.dir(state.snake);
+    // }, 1000);
 
-console.log(animateRAFInterval.cancel());
 
-animateRAFInterval.start((time) => {
-    moveSnake(state.snake);
-    console.dir(state.snake);
-}, 1000);
+});
 
-//animateRAFInterval.cancel();
 
-setTimeout(() => {
-    animateRAFInterval.cancel();
-}, 5500);
-
-setTimeout(() => {
-    console.log(animateRAFInterval.cancel());
-}, 6000);
