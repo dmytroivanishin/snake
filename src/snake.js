@@ -62,3 +62,15 @@ export const changeDirection = (keyCode, snake) => {
 
     moveSnake(snake);
 };
+
+export const checkGrowth = (state) => {
+    const headSnake = getHeadSnake(state.snake);
+    const { food: { didAte, apples } } = state;
+
+    if(apples.x === headSnake.x && apples.y === headSnake.y){
+        state.food.didAte = true;
+        state.food.apples = {};
+    }
+
+    console.log(apples);
+}
