@@ -1,7 +1,6 @@
 import { animateRAFInterval } from "./utils";
-import { moveSnake, changeDirection, checkGrowth } from "./snake";
-//import getRandomPosition from "./food";
-import { addNewFood } from "./food";
+import Snake from "./snake";
+import Food from "./food";
 
 const state = {
     snake: {
@@ -11,6 +10,7 @@ const state = {
             {x: 2, y: 0, d: "right", h: false},
             {x: 3, y: 0, d: "right", h: true}
         ],
+        lastPosTail: {},
         direction: "right"
     },
     food: {
@@ -19,8 +19,8 @@ const state = {
     }
 };
 
-
-
+const snake = new Snake(state);
+const food = new Food(state);
 
 window.addEventListener("load", () => {
     const canvas = document.getElementById("game-field");
@@ -29,18 +29,11 @@ window.addEventListener("load", () => {
     canvas.style.width = "600px";
     canvas.style.height = "600px";
 
-    
-    //console.log(state.food.apples);
-
     const renderGame = () => {
         ctx.clearRect(0, 0, 600, 600);
-    
-        //ctx.fillRect(0, 0, 30, 30)
-    
+
         for(let y = 0; y < 20; y+=1){
-            //console.log(i)
             for(let x = 0; x < 20; x+=1){
-                //console.log(x*30, y*30)
 
                 for(let s = 0; s < state.snake.tail.length; s+=1){
                     if(x === state.snake.tail[s].x && y === state.snake.tail[s].y){
@@ -53,46 +46,34 @@ window.addEventListener("load", () => {
                     ctx.fillStyle = "red";
                     ctx.fillRect(x*30, y*30, 30, 30)
                 }
-    
-                
-                
+
             }
         }
     };
-    console.log({...state.food});
-    addNewFood(state);
 
+    food.addNewFood();
     renderGame();
-
-    console.log({...state.food});
 
     document.addEventListener("keydown", (e) => {
 
-        changeDirection(e.keyCode, state.snake);
-        checkGrowth(state);
-        addNewFood(state);
-        //moveSnake(state.snake)
+        animateRAFInterval.cancel();
 
-        console.log({...state.food});
+        snake.changeDirection(e.keyCode);
+        snake.checkGrowth();
+        food.addNewFood();
+
         renderGame();
+
+        animateRAFInterval.start(() => {
+
+            snake.moveSnake();
+            snake.checkGrowth();
+            food.addNewFood();
+
+            renderGame();
+
+        }, 200);
     });
-
-    //addNewFood(state);
-    
-
-    // animateRAFInterval.start((time) => {
-
-    //     //console.log(state.food.apples);
-    //     moveSnake(state.snake);
-    //     checkGrowth(state);
-    //     addNewFood(state);
-    //     //console.log(getRandomPosition(20))
-
-        
-    //     renderGame();
-    //     // console.dir(state.snake.direction, state.snake.tail);
-    // }, 400);
-
 
 });
 
