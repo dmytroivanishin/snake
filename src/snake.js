@@ -86,7 +86,7 @@ export default class Snake {
         return false;
     }
 
-    _getCollision() {
-
+    _getCollision(snake) {
+        
     }
 };

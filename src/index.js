@@ -5,10 +5,10 @@ import Food from "./food";
 const state = {
     snake: {
         tail: [
-            {x: 0, y: 0, d: "right", h: false},
-            {x: 1, y: 0, d: "right", h: false},
-            {x: 2, y: 0, d: "right", h: false},
-            {x: 3, y: 0, d: "right", h: true}
+            {x: 2, y: 2, d: "right", h: false},
+            {x: 3, y: 2, d: "right", h: false},
+            {x: 4, y: 2, d: "right", h: false},
+            {x: 5, y: 2, d: "right", h: true}
         ],
         lastPosTail: {},
         direction: "right"
@@ -29,19 +29,22 @@ window.addEventListener("load", () => {
     const ctx = canvas.getContext("2d");
 
     canvas.width = 600;
-    canvas.height = 700;
+    canvas.height = 660;
 
     const renderScore = () => {
         ctx.fillStyle = "green";
         ctx.fillRect(0, 0, 600, 60);
 
         ctx.fillStyle = "black";
-        ctx.font = 'normal 30px Arial, sans-serif';
-        ctx.fillText(state.score, 15, 60 / 2 + 30 / 3);
+        ctx.font = "normal 30px Arial, sans-serif";
+        ctx.fillText(state.score, 60, 60 / 2 + 30 / 3);
+
+        ctx.fillStyle = "red";
+        ctx.fillRect(15, 60 / 2 - 30 / 2, 30, 30);
     };
 
     const renderGame = () => {
-        ctx.clearRect(0, 0, 600, 700);
+        ctx.clearRect(0, 0, 600, 660);
 
         renderScore();
 
@@ -51,13 +54,13 @@ window.addEventListener("load", () => {
                 for(let s = 0; s < state.snake.tail.length; s+=1){
                     if(x === state.snake.tail[s].x && y === state.snake.tail[s].y){
                         ctx.fillStyle = "blue";
-                        ctx.fillRect(x*30, y*30 + 60, 30, 30)
+                        ctx.fillRect(x*30, y*30 + 60, 30, 30);
                     }
                 }
 
                 if(x === state.food.apples.x && y === state.food.apples.y){
                     ctx.fillStyle = "red";
-                    ctx.fillRect(x*30, y*30 + 60, 30, 30)
+                    ctx.fillRect(x*30, y*30 + 60, 30, 30);
                 }
 
             }
