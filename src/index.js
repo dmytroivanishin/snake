@@ -16,21 +16,34 @@ const state = {
     food: {
         didAte: true,
         apples: {}
-    }
+    },
+    score: 0
 };
 
 const snake = new Snake(state);
 const food = new Food(state);
 
 window.addEventListener("load", () => {
+
     const canvas = document.getElementById("game-field");
     const ctx = canvas.getContext("2d");
 
-    canvas.style.width = "600px";
-    canvas.style.height = "600px";
+    canvas.width = 600;
+    canvas.height = 700;
+
+    const renderScore = () => {
+        ctx.fillStyle = "green";
+        ctx.fillRect(0, 0, 600, 60);
+
+        ctx.fillStyle = "black";
+        ctx.font = 'normal 30px Arial, sans-serif';
+        ctx.fillText(state.score, 15, 60 / 2 + 30 / 3);
+    };
 
     const renderGame = () => {
-        ctx.clearRect(0, 0, 600, 600);
+        ctx.clearRect(0, 0, 600, 700);
+
+        renderScore();
 
         for(let y = 0; y < 20; y+=1){
             for(let x = 0; x < 20; x+=1){
@@ -38,13 +51,13 @@ window.addEventListener("load", () => {
                 for(let s = 0; s < state.snake.tail.length; s+=1){
                     if(x === state.snake.tail[s].x && y === state.snake.tail[s].y){
                         ctx.fillStyle = "blue";
-                        ctx.fillRect(x*30, y*30, 30, 30)
+                        ctx.fillRect(x*30, y*30 + 60, 30, 30)
                     }
                 }
 
                 if(x === state.food.apples.x && y === state.food.apples.y){
                     ctx.fillStyle = "red";
-                    ctx.fillRect(x*30, y*30, 30, 30)
+                    ctx.fillRect(x*30, y*30 + 60, 30, 30)
                 }
 
             }
@@ -61,7 +74,7 @@ window.addEventListener("load", () => {
         snake.changeDirection(e.keyCode);
         snake.checkGrowth();
         food.addNewFood();
-
+        
         renderGame();
 
         animateRAFInterval.start(() => {
@@ -69,6 +82,7 @@ window.addEventListener("load", () => {
             snake.moveSnake();
             snake.checkGrowth();
             food.addNewFood();
+
 
             renderGame();
 

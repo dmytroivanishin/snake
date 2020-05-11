@@ -10,10 +10,11 @@ body{
     left: 50%;
     transform: translate(-50% , -50%);
     width: 600px;
-    height: 600px;
+    height: 700px;
     margin: 0 auto;
     background-color: rgb(147, 161, 173);
     &__game-field{
         display: block;
+        background-color: rgb(98, 127, 151);
     }
 }

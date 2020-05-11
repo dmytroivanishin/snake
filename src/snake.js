@@ -53,12 +53,13 @@ export default class Snake {
     checkGrowth() {
         const { snake } = this.state;
         const headSnake = this._getHeadSnake(snake);
-        const { food: { apples } } = this.state;
+        const { food: { apples }, score } = this.state;
     
         if(apples.x === headSnake.x && apples.y === headSnake.y){
             this.state.food.didAte = true;
             this.state.food.apples = {};
             this.state.snake.tail.unshift(this.state.snake.lastPosTail)
+            this.state.score = score + 1;
         }
     }
 
@@ -83,5 +84,9 @@ export default class Snake {
         }
     
         return false;
+    }
+
+    _getCollision() {
+
     }
 };
