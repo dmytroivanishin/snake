@@ -43,7 +43,7 @@ window.addEventListener("load", () => {
     canvas.width = 600;
     canvas.height = 660;
 
-    const renderScore = () => {
+    const _renderScore = () => {
         ctx.fillStyle = "green";
         ctx.fillRect(0, 0, 600, 60);
 
@@ -55,49 +55,49 @@ window.addEventListener("load", () => {
         ctx.fillRect(15, 60 / 2 - 30 / 2, 30, 30);
     };
 
+    const _renderSnake = (snake, x, y) => {
+        for(let s = 0; s < snake.tail.length; s+=1) {
+            if(x === snake.tail[s].x && y === snake.tail[s].y) {
+                ctx.fillStyle = "blue";
+                ctx.fillRect(x*30, y*30 + 60, 30, 30);
+                if(snake.tail[s].h){
+                    ctx.fillStyle = "aqua";
+                    ctx.fillRect(x*30, y*30 + 60, 30, 30);
+                }
+            }
+        }
+    };
+
+    const _renderFood = (food, x, y) => {
+        if(x === food.apples.x && y === state.food.apples.y) {
+            ctx.fillStyle = "red";
+            ctx.fillRect(x*30, y*30 + 60, 30, 30);
+        }
+    };
+
     const renderGame = () => {
         ctx.clearRect(0, 0, 600, 660);
 
-        renderScore();
+        _renderScore();
 
         for(let y = 0; y < 20; y+=1) {
             for(let x = 0; x < 20; x+=1) {
 
-                for(let s = 0; s < state.snake.tail.length; s+=1) {
-                    if(x === state.snake.tail[s].x && y === state.snake.tail[s].y) {
-                        ctx.fillStyle = "blue";
-                        ctx.fillRect(x*30, y*30 + 60, 30, 30);
-                        if(state.snake.tail[s].h){
-                            ctx.fillStyle = "aqua";
-                            ctx.fillRect(x*30, y*30 + 60, 30, 30);
-                        }
-                    }
-                    
-                }
-
-                if(x === state.food.apples.x && y === state.food.apples.y) {
-                    ctx.fillStyle = "red";
-                    ctx.fillRect(x*30, y*30 + 60, 30, 30);
-                }
+                _renderSnake(state.snake, x, y);
+                _renderFood(state.food, x, y);   
 
             }
         }
     };
 
-    //console.log(state.gameOver);
     food.addNewFood();
-    //snake.moveSnake();
     renderGame();
-    //console.log(state.gameOver);
 
     document.addEventListener("keydown", (e) => {
 
         animateRAFInterval.cancel();
 
         snake.changeDirection(e.keyCode);
-
-        //console.log(state.gameOver);
-
         snake.checkGrowth();
         food.addNewFood();
         
@@ -108,9 +108,7 @@ window.addEventListener("load", () => {
             snake.moveSnake();
             snake.checkGrowth();
             food.addNewFood();
-
-            //console.log(state.gameOver);
-
+            
             renderGame();
 
         }, 500);
