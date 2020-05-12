@@ -8,7 +8,18 @@ const state = {
             {x: 2, y: 2, d: "right", h: false},
             {x: 3, y: 2, d: "right", h: false},
             {x: 4, y: 2, d: "right", h: false},
-            {x: 5, y: 2, d: "right", h: true}
+            {x: 5, y: 2, d: "right", h: false},
+            {x: 6, y: 2, d: "right", h: false},
+            {x: 7, y: 2, d: "right", h: false},
+            {x: 8, y: 2, d: "right", h: true}
+
+            // {x: 2, y: 2, d: "right", h: false},
+            // {x: 3, y: 2, d: "right", h: false},
+            // {x: 4, y: 2, d: "right", h: false},
+            // {x: 4, y: 3, d: "right", h: false},
+            // {x: 3, y: 2, d: "right", h: false},
+            // {x: 3, y: 3, d: "right", h: false},
+            // {x: 3, y: 2, d: "right", h: true}
         ],
         lastPosTail: {},
         direction: "right"
@@ -17,7 +28,8 @@ const state = {
         didAte: true,
         apples: {}
     },
-    score: 0
+    score: 0,
+    gameOver: false
 };
 
 const snake = new Snake(state);
@@ -48,17 +60,22 @@ window.addEventListener("load", () => {
 
         renderScore();
 
-        for(let y = 0; y < 20; y+=1){
-            for(let x = 0; x < 20; x+=1){
+        for(let y = 0; y < 20; y+=1) {
+            for(let x = 0; x < 20; x+=1) {
 
-                for(let s = 0; s < state.snake.tail.length; s+=1){
-                    if(x === state.snake.tail[s].x && y === state.snake.tail[s].y){
+                for(let s = 0; s < state.snake.tail.length; s+=1) {
+                    if(x === state.snake.tail[s].x && y === state.snake.tail[s].y) {
                         ctx.fillStyle = "blue";
                         ctx.fillRect(x*30, y*30 + 60, 30, 30);
+                        if(state.snake.tail[s].h){
+                            ctx.fillStyle = "aqua";
+                            ctx.fillRect(x*30, y*30 + 60, 30, 30);
+                        }
                     }
+                    
                 }
 
-                if(x === state.food.apples.x && y === state.food.apples.y){
+                if(x === state.food.apples.x && y === state.food.apples.y) {
                     ctx.fillStyle = "red";
                     ctx.fillRect(x*30, y*30 + 60, 30, 30);
                 }
@@ -67,14 +84,20 @@ window.addEventListener("load", () => {
         }
     };
 
+    //console.log(state.gameOver);
     food.addNewFood();
+    //snake.moveSnake();
     renderGame();
+    //console.log(state.gameOver);
 
     document.addEventListener("keydown", (e) => {
 
         animateRAFInterval.cancel();
 
         snake.changeDirection(e.keyCode);
+
+        //console.log(state.gameOver);
+
         snake.checkGrowth();
         food.addNewFood();
         
@@ -86,10 +109,11 @@ window.addEventListener("load", () => {
             snake.checkGrowth();
             food.addNewFood();
 
+            //console.log(state.gameOver);
 
             renderGame();
 
-        }, 200);
+        }, 500);
     });
 
 });

@@ -11,7 +11,7 @@ export default class Snake {
         const direction = snake.direction;
         let newMovementSnake;
         let lastPosTail;
-        
+
         if(direction === "left"){
             newMovementSnake =  { x: headSnake.x - 1, y: headSnake.y, d: direction, h: true };
         }
@@ -24,12 +24,19 @@ export default class Snake {
         if(direction === "down"){
             newMovementSnake =  { x: headSnake.x, y: headSnake.y + 1, d: direction, h: true };
         }
-    
+        
         if(!newMovementSnake){
             return false;
         }
+
+        newMovementSnake = this._setTeleportSnake(newMovementSnake);
+
+        if(this._getCollisionSnake(newMovementSnake)){
+            this.state.gameOver = true;
+            return false;
+        }
     
-        headSnake.h = false
+        headSnake.h = false;
         lastPosTail = this.state.snake.tail.shift();
 
         this.state.snake.tail.push(newMovementSnake);
@@ -86,7 +93,33 @@ export default class Snake {
         return false;
     }
 
-    _getCollision(snake) {
+    _getCollisionSnake(headSnake) {
+        const { tail } = this.state.snake;
         
+        for(let t = 0; t < tail.length; t+=1){
+            if(tail[t].x === headSnake.x && tail[t].y === headSnake.y){
+                return true;
+            }
+        }
     }
+
+    _setTeleportSnake(newHeadSnake) {
+        const { direction } = this.state.snake;
+
+        if(newHeadSnake.x > 19 && direction === "right"){
+            return { x: 0, y: newHeadSnake.y, d: direction, h: true };
+        }
+        if(newHeadSnake.x < 0 && direction === "left"){
+            return { x: 19, y: newHeadSnake.y, d: direction, h: true };
+        }
+        if(newHeadSnake.y < 0 && direction === "up"){
+            return { x: newHeadSnake.x, y: 19, d: direction, h: true };
+        }
+        if(newHeadSnake.y > 19 && direction === "down"){
+            return { x: newHeadSnake.x, y: 0, d: direction, h: true };
+        }
+
+        return { x: newHeadSnake.x, y: newHeadSnake.y, d: direction, h: true };
+    }
+
 };
