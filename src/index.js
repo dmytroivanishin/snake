@@ -29,7 +29,7 @@ const state = {
     },
     score: 0,
     maps: maps,
-    activeMap: 2,
+    activeMap: 4,
     gameOver: false
 };
 
@@ -81,7 +81,6 @@ window.addEventListener("load", () => {
     const _renderMap = (map, x, y) => {
         for(let m = 0; m < map.length; m+=1) {
             if(map[m].x === x && map[m].y === y) {
-                //console.log(map[m], x, y);
                 ctx.fillStyle = "brown";
                 ctx.fillRect(x*settings.sizeCeil, y*settings.sizeCeil + settings.scoreBoard, settings.sizeCeil, settings.sizeCeil);
             }

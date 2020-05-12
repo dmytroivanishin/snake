@@ -5,9 +5,7 @@ export default class Food {
 
     addNewFood() {
         const cordsNewFood = this._getFreeSpace();
-    
-        console.log(cordsNewFood);
-
+        
         if(cordsNewFood){
             this.state.food.apples = {
                 x: cordsNewFood.x,
@@ -37,8 +35,6 @@ export default class Food {
     
             x =  this._getRandomPosition(20),
             y =  this._getRandomPosition(20);
-            // x =  5,
-            // y =  4;
     
             for(let t = 0; t < tail.length; t+=1){
                 if(tail[t].x === x && tail[t].y === y){
@@ -64,9 +60,7 @@ export default class Food {
                 }
             }
         }
-        // if(!isNewCordsFood){
-        //     return {x, y};
-        // }
+
         return {x, y};
     }
 };
