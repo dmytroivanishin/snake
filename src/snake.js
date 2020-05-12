@@ -94,11 +94,21 @@ export default class Snake {
     }
 
     _getCollisionSnake(headSnake) {
+        const { maps, activeMap } = this.state;
         const { tail } = this.state.snake;
+        const map = maps[`map${activeMap}`];
         
         for(let t = 0; t < tail.length; t+=1){
             if(tail[t].x === headSnake.x && tail[t].y === headSnake.y){
                 return true;
+            }
+        }
+
+        for(let m = 0; m < map.length; m+=1) {
+            for(let t = 0; t < tail.length; t+=1){
+                if(headSnake.x === map[m].x && headSnake.y === map[m].y) {
+                    return true;
+                }
             }
         }
     }

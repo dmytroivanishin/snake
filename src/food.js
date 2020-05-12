@@ -4,8 +4,10 @@ export default class Food {
     }
 
     addNewFood() {
-        const cordsNewFood = this._getFreeSpace(this.state);
+        const cordsNewFood = this._getFreeSpace();
     
+        console.log(cordsNewFood);
+
         if(cordsNewFood){
             this.state.food.apples = {
                 x: cordsNewFood.x,
@@ -19,9 +21,11 @@ export default class Food {
         return Math.floor(Math.random() * num);
     }
     
-    _getFreeSpace({ snake, food }) {
-        const { tail } = snake;
-        const { didAte } = food;
+    _getFreeSpace() {
+        const { snake, food, maps, activeMap } = this.state;
+        const { tail } =  snake;
+        const { didAte } =  food;
+        const map = maps[`map${activeMap}`];
         let isNewCordsFood = true,
             x, y;
     
@@ -33,6 +37,8 @@ export default class Food {
     
             x =  this._getRandomPosition(20),
             y =  this._getRandomPosition(20);
+            // x =  5,
+            // y =  4;
     
             for(let t = 0; t < tail.length; t+=1){
                 if(tail[t].x === x && tail[t].y === y){
@@ -43,8 +49,24 @@ export default class Food {
                     isNewCordsFood = false;
                 }
             }
+
+            if(isNewCordsFood){
+                continue;
+            }
+
+            for(let m = 0; m < map.length; m+=1) {
+                if(map[m].x === x && map[m].y === y) {
+                    isNewCordsFood = true;
+                    break;
+                }
+                else{
+                    isNewCordsFood = false;
+                }
+            }
         }
-    
+        // if(!isNewCordsFood){
+        //     return {x, y};
+        // }
         return {x, y};
     }
 };

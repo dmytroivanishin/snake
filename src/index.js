@@ -1,26 +1,24 @@
 import { animateRAFInterval } from "./utils";
 import Snake from "./snake";
 import Food from "./food";
+import * as maps from "./maps";
 
 const settings = {
+    width: 600,
+    height: 660,
     sizeGrid: 600,
     sizeRow: 20,
     sizeCeil: 30,
-    width: 600,
-    height: 660,
     scoreBoard: 60
 };
 
 const state = {
     snake: {
         tail: [
-            {x: 2, y: 2, d: "right", h: false},
-            {x: 3, y: 2, d: "right", h: false},
-            {x: 4, y: 2, d: "right", h: false},
-            {x: 5, y: 2, d: "right", h: false},
-            {x: 6, y: 2, d: "right", h: false},
-            {x: 7, y: 2, d: "right", h: false},
-            {x: 8, y: 2, d: "right", h: true}
+            {x: 1, y: 1, d: "right", h: false},
+            {x: 2, y: 1, d: "right", h: false},
+            {x: 3, y: 1, d: "right", h: false},
+            {x: 4, y: 1, d: "right", h: true}
         ],
         lastPosTail: {},
         direction: "right"
@@ -30,11 +28,15 @@ const state = {
         apples: {}
     },
     score: 0,
+    maps: maps,
+    activeMap: 2,
     gameOver: false
 };
 
 const snake = new Snake(state);
 const food = new Food(state);
+
+//console.log(state.maps[`map${state.activeMap}`]);
 
 window.addEventListener("load", () => {
 
@@ -76,6 +78,16 @@ window.addEventListener("load", () => {
         }
     };
 
+    const _renderMap = (map, x, y) => {
+        for(let m = 0; m < map.length; m+=1) {
+            if(map[m].x === x && map[m].y === y) {
+                //console.log(map[m], x, y);
+                ctx.fillStyle = "brown";
+                ctx.fillRect(x*settings.sizeCeil, y*settings.sizeCeil + settings.scoreBoard, settings.sizeCeil, settings.sizeCeil);
+            }
+        }
+    }
+
     const renderGame = () => {
         ctx.clearRect(0, 0, settings.width, settings.height);
 
@@ -85,7 +97,8 @@ window.addEventListener("load", () => {
             for(let x = 0; x < settings.sizeRow; x+=1) {
 
                 _renderSnake(state.snake, x, y);
-                _renderFood(state.food, x, y);   
+                _renderMap(state.maps[`map${state.activeMap}`], x, y);
+                _renderFood(state.food, x, y);  
 
             }
         }
@@ -112,7 +125,7 @@ window.addEventListener("load", () => {
 
             renderGame();
 
-        }, 500);
+        }, 100);
     });
 
 });
