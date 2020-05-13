@@ -27,9 +27,11 @@ const state = {
         didAte: true,
         apples: {}
     },
-    score: 0,
+    score: 442,
     maps: maps,
     level: 4,
+    nextLevel: false,
+    win: false,
     gameOver: false
 };
 
@@ -37,6 +39,8 @@ const snake = new Snake(state);
 const food = new Food(state);
 
 console.log(state.maps[`map${state.level}`]);
+console.log(state.level);
+console.log(state.score);
 
 window.addEventListener("load", () => {
 
@@ -108,23 +112,37 @@ window.addEventListener("load", () => {
 
     document.addEventListener("keydown", (e) => {
 
-        animateRAFInterval.cancel();
+        //animateRAFInterval.cancel();
 
         snake.changeDirection(e.keyCode);
-        snake.checkGrowth();
+        snake.checkNextLevel();
+        snake.checkWin();
+        //snake.checkGrowth();
         food.addNewFood();
         
+        console.log(state.maps[`map${state.level}`]);
+        console.log(state.level);
+        console.log(state.score);
+        console.log(state.gameOver);
+        console.log(state.win);
+
         renderGame();
 
-        animateRAFInterval.start(() => {
+        // animateRAFInterval.start(() => {
 
-            snake.moveSnake();
-            snake.checkGrowth();
-            food.addNewFood();
+        //     snake.checkNextLevel();
+        //     snake.checkWin();
+        //     snake.moveSnake();
+        //     //snake.checkGrowth();
+        //     food.addNewFood();
 
-            renderGame();
+        //     console.log(state.maps[`map${state.level}`]);
+        //     console.log(state.level);
+        //     console.log(state.score);
 
-        }, 100);
+        //     renderGame();
+
+        // }, 500);
     });
 
 });

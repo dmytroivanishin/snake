@@ -41,6 +41,8 @@ export default class Snake {
 
         this.state.snake.tail.push(newMovementSnake);
         this.state.snake.lastPosTail = lastPosTail;
+
+        this._checkGrowth();
     }
 
     changeDirection(keyCode) {
@@ -56,8 +58,27 @@ export default class Snake {
     
         this.moveSnake();
     };
+
+    checkNextLevel() {
+        const { score, maps, level } = this.state;
+        const map = maps[`map${level}`];
+
+        if(score >= map.completed && level < 4){
+            this.state.level = level + 1;
+        }
+    }
+
+    checkWin() {
+        const { score, maps, level } = this.state;
+        const map = maps[`map${level}`];
+
+        if(score >= map.completed && level >= 4){
+            this.state.win = true;
+            this.state.gameOver = true;
+        }
+    }
     
-    checkGrowth() {
+    _checkGrowth() {
         const { snake } = this.state;
         const headSnake = this._getHeadSnake(snake);
         const { food: { apples }, score } = this.state;
