@@ -14,6 +14,7 @@ body{
     margin: 0 auto;
     background-color: rgb(147, 161, 173);
     &__game-field{
+        width: 100%;
         display: block;
         background-color: rgb(98, 127, 151);
     }
