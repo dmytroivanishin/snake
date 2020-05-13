@@ -1,7 +1,19 @@
-const map1 = [];
-const map2 = [];
-const map3 = [];
-const map4 = [];
+const map1 = {
+    cords: [],
+    completed: 600
+};
+const map2 = {
+    cords: [],
+    completed: 600
+};
+const map3 = {
+    cords: [],
+    completed: 600
+};
+const map4 = {
+    cords: [],
+    completed: 600
+};
 
 const generateMap = (map, axis, from, to, numRestAxis) => {
     const countIterations = to - from;
@@ -10,8 +22,10 @@ const generateMap = (map, axis, from, to, numRestAxis) => {
 
     for(let i = 0; i < countIterations; i += 1) {
         cords = { [axis]: from + i, [getRestAxis]: numRestAxis }
-        map.push(cords);
+        map.cords.push(cords);
     }
+
+    map.completed = map.completed - countIterations;
 };
 
 generateMap(map2, "x", 5, 14, 4);
@@ -48,15 +62,11 @@ generateMap(map4, "y", 7, 13, 15);
 generateMap(map4, "y", 7, 13, 16);
 generateMap(map4, "y", 7, 13, 4);
 generateMap(map4, "y", 7, 13, 3);
-
 generateMap(map4, "x", 7, 13, 7);
 generateMap(map4, "x", 7, 13, 8);
 generateMap(map4, "x", 7, 13, 9);
 generateMap(map4, "x", 7, 13, 10);
 generateMap(map4, "x", 7, 13, 11);
 generateMap(map4, "x", 7, 13, 12);
-
-
-console.log(map4);
 
 export { map1, map2, map3, map4 };

@@ -20,10 +20,10 @@ export default class Food {
     }
     
     _getFreeSpace() {
-        const { snake, food, maps, activeMap } = this.state;
+        const { snake, food, maps, level } = this.state;
         const { tail } =  snake;
         const { didAte } =  food;
-        const map = maps[`map${activeMap}`];
+        const map = maps[`map${level}`];
         let isNewCordsFood = true,
             x, y;
     
@@ -50,8 +50,8 @@ export default class Food {
                 continue;
             }
 
-            for(let m = 0; m < map.length; m+=1) {
-                if(map[m].x === x && map[m].y === y) {
+            for(let m = 0; m < map.cords.length; m+=1) {
+                if(map.cords[m].x === x && map.cords[m].y === y) {
                     isNewCordsFood = true;
                     break;
                 }

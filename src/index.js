@@ -29,14 +29,14 @@ const state = {
     },
     score: 0,
     maps: maps,
-    activeMap: 4,
+    level: 4,
     gameOver: false
 };
 
 const snake = new Snake(state);
 const food = new Food(state);
 
-//console.log(state.maps[`map${state.activeMap}`]);
+console.log(state.maps[`map${state.level}`]);
 
 window.addEventListener("load", () => {
 
@@ -79,8 +79,8 @@ window.addEventListener("load", () => {
     };
 
     const _renderMap = (map, x, y) => {
-        for(let m = 0; m < map.length; m+=1) {
-            if(map[m].x === x && map[m].y === y) {
+        for(let m = 0; m < map.cords.length; m+=1) {
+            if(map.cords[m].x === x && map.cords[m].y === y) {
                 ctx.fillStyle = "brown";
                 ctx.fillRect(x*settings.sizeCeil, y*settings.sizeCeil + settings.scoreBoard, settings.sizeCeil, settings.sizeCeil);
             }
@@ -96,7 +96,7 @@ window.addEventListener("load", () => {
             for(let x = 0; x < settings.sizeRow; x+=1) {
 
                 _renderSnake(state.snake, x, y);
-                _renderMap(state.maps[`map${state.activeMap}`], x, y);
+                _renderMap(state.maps[`map${state.level}`], x, y);
                 _renderFood(state.food, x, y);  
 
             }
