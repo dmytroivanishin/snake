@@ -68,7 +68,7 @@ export default class Game {
 
         const { snake, food, maps, level, score } = this.store.getState();
 
-        this._renderScore(score);
+        this._renderScoreboard(score, level);
 
         for(let y = 0; y < 20; y+=1) {
             for(let x = 0; x < 20; x+=1) {
@@ -81,16 +81,22 @@ export default class Game {
         }
     };
 
-    _renderScore(score) {
+    _renderScoreboard(score, level) {
         this.ctx.fillStyle = "green";
         this.ctx.fillRect(0, 0, 600, 60);
 
         this.ctx.fillStyle = "black";
         this.ctx.font = "normal 30px Arial, sans-serif";
-        this.ctx.fillText(score, 60, 60 / 2 + 30 / 3);
+        this.ctx.textBaseline = "top";
+        this.ctx.fillText(score, 60, 18);
 
         this.ctx.fillStyle = "red";
-        this.ctx.fillRect(15, 60 / 2 - 30 / 2, 30, 30);
+        this.ctx.fillRect(15, 15, 30, 30);
+
+        this.ctx.fillStyle = "black";
+        this.ctx.textAlign = "left";
+        this.ctx.font = "normal 25px Arial, sans-serif";
+        this.ctx.fillText(`Level: ${level}`, 500, 18);
     }
 
     _renderSnake(snake, x, y) {

@@ -4,11 +4,11 @@ const map1 = {
 };
 const map2 = {
     cords: [],
-    completed: 596
+    completed: 46
 };
 const map3 = {
     cords: [],
-    completed: 596
+    completed: 116
 };
 const map4 = {
     cords: [],
@@ -68,5 +68,7 @@ generateMap(map4, "x", 7, 13, 9);
 generateMap(map4, "x", 7, 13, 10);
 generateMap(map4, "x", 7, 13, 11);
 generateMap(map4, "x", 7, 13, 12);
+
+console.log( map1.completed, map2.completed, map3.completed, map4.completed );
 
 export { map1, map2, map3, map4 };

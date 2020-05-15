@@ -31,7 +31,7 @@ const initialState = {
     },
     score: 0,
     maps: maps,
-    level: 4,
+    level: 1,
     nextLevel: false,
     win: false,
     gameOver: false
