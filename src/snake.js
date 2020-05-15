@@ -1,12 +1,12 @@
 import { mapKeyCode } from './utils';
 
 export default class Snake {
-    constructor(state){
-        this.state = state;
+    constructor(store){
+        this.store = store;
     }
     
     moveSnake() {
-        const { snake } = this.state;
+        const { snake } = this.store.getState();
         const headSnake = this._getHeadSnake(snake);
         const direction = snake.direction;
         let newMovementSnake;
@@ -30,27 +30,23 @@ export default class Snake {
         }
 
         newMovementSnake = this._setTeleportSnake(newMovementSnake);
-
+        
         if(this._getCollisionSnake(newMovementSnake)){
-            this.state.gameOver = true;
-            return false;
+            this.store.dispatch({ type: "GAME_OVER" });
+            return true;
         }
-    
-        headSnake.h = false;
-        lastPosTail = this.state.snake.tail.shift();
 
-        this.state.snake.tail.push(newMovementSnake);
-        this.state.snake.lastPosTail = lastPosTail;
+        this.store.dispatch({ type: "MOVE", payload: newMovementSnake });
 
         this._checkGrowth();
     }
 
     changeDirection(keyCode) {
-        const { snake } = this.state;
+        const { snake } = this.store.getState();
         const direction = mapKeyCode(keyCode);
     
         if(this._hasDirection(snake, direction)) {
-            this.state.snake.direction = direction;
+            this.store.dispatch({ type: "CHANGE_DIRECTION", payload: direction });
         }
         else{
             return false;
@@ -60,34 +56,29 @@ export default class Snake {
     };
 
     checkNextLevel() {
-        const { score, maps, level } = this.state;
+        const { score, maps, level } = this.store.getState();
         const map = maps[`map${level}`];
 
         if(score >= map.completed && level < 4){
-            this.state.level = level + 1;
+            this.store.dispatch({ type: "NEXT_LEVEL" });
         }
     }
 
     checkWin() {
-        const { score, maps, level } = this.state;
+        const { score, maps, level } = this.store.getState();
         const map = maps[`map${level}`];
 
         if(score >= map.completed && level >= 4){
-            this.state.win = true;
-            this.state.gameOver = true;
+            this.store.dispatch({ type: "WIN" });
         }
     }
     
     _checkGrowth() {
-        const { snake } = this.state;
+        const { snake, food: { apples }, score } = this.store.getState();
         const headSnake = this._getHeadSnake(snake);
-        const { food: { apples }, score } = this.state;
-    
+
         if(apples.x === headSnake.x && apples.y === headSnake.y){
-            this.state.food.didAte = true;
-            this.state.food.apples = {};
-            this.state.snake.tail.unshift(this.state.snake.lastPosTail)
-            this.state.score = score + 1;
+            this.store.dispatch({ type: "GROWTH" });
         }
     }
 
@@ -115,8 +106,8 @@ export default class Snake {
     }
 
     _getCollisionSnake(headSnake) {
-        const { maps, level } = this.state;
-        const { tail } = this.state.snake;
+        const { snake, maps, level } = this.store.getState();
+        const { tail } = snake;
         const map = maps[`map${level}`];
         
         for(let t = 0; t < tail.length; t+=1){
@@ -135,7 +126,7 @@ export default class Snake {
     }
 
     _setTeleportSnake(newHeadSnake) {
-        const { direction } = this.state.snake;
+        const { snake: { direction } } = this.store.getState();
 
         if(newHeadSnake.x > 19 && direction === "right"){
             return { x: 0, y: newHeadSnake.y, d: direction, h: true };

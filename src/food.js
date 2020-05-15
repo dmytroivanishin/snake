@@ -1,17 +1,13 @@
 export default class Food {
-    constructor(state){
-        this.state = state;
+    constructor(store){
+        this.store = store;
     }
 
     addNewFood() {
         const cordsNewFood = this._getFreeSpace();
         
         if(cordsNewFood){
-            this.state.food.apples = {
-                x: cordsNewFood.x,
-                y: cordsNewFood.y
-            }
-            this.state.food.didAte = false;
+            this.store.dispatch({ type: "ADD_FOOD", payload: cordsNewFood })
         }
     }
 
@@ -20,7 +16,7 @@ export default class Food {
     }
     
     _getFreeSpace() {
-        const { snake, food, maps, level } = this.state;
+        const { snake, food, maps, level } = this.store.getState();
         const { tail } =  snake;
         const { didAte } =  food;
         const map = maps[`map${level}`];

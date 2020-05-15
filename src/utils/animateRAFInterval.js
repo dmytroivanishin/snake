@@ -1,12 +1,14 @@
 const animateRAFInterval = {
     id: null,
     start: null,
+    canceled: false,
     cancel() {
         if(!this.id){
             return false;
         }
         cancelAnimationFrame(this.id);
         this.id = null;
+        this.canceled = true;
     }
 };
 
@@ -18,7 +20,9 @@ const startRAFInterval = (cb, time = 1) => {
     if(typeof cb !== "function"){
         throw new TypeError("Callback is not a function.");
     }
-        
+    
+    animateRAFInterval.canceled = false;
+
     let startTime			= null,
         currentTime			= 0,
         rest				= 0,
@@ -40,7 +44,10 @@ const startRAFInterval = (cb, time = 1) => {
             cb(currentMillisecond);
         }
         
-        animateRAFInterval.id = requestAnimationFrame(animate);
+        if(!animateRAFInterval.canceled){
+            animateRAFInterval.id = requestAnimationFrame(animate);
+        }
+        
     };
 
     animateRAFInterval.id = requestAnimationFrame(animate);

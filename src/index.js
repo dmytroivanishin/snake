@@ -1,51 +1,66 @@
-//import { animateRAFInterval } from "./utils";
+import { animateRAFInterval } from "./utils";
 import Game from "./game";
 import Snake from "./snake";
 import Food from "./food";
-import * as maps from "./maps";
+//import * as maps from "./maps";
 
-// const settings = {
-//     width: 600,
-//     height: 660,
-//     sizeGrid: 600,
-//     sizeRow: 20,
-//     sizeCeil: 30,
-//     scoreBoard: 60
-// };
+import store from "./store";
 
-const state = {
-    snake: {
-        tail: [
-            {x: 1, y: 1, d: "right", h: false},
-            {x: 2, y: 1, d: "right", h: false},
-            {x: 3, y: 1, d: "right", h: false},
-            {x: 4, y: 1, d: "right", h: true}
-        ],
-        lastPosTail: {},
-        direction: "right"
-    },
-    food: {
-        didAte: true,
-        apples: {}
-    },
-    score: 0,
-    maps: maps,
-    level: 3,
-    nextLevel: false,
-    win: false,
-    gameOver: false
+//console.log(maps);
+
+const settings = {
+    width: 600,
+    height: 660,
+    sizeGrid: 600,
+    sizeRow: 20,
+    sizeCeil: 30,
+    scoreBoard: 60
 };
 
-const snake = new Snake(state);
-const food = new Food(state);
+// const state = {
+//     snake: {
+//         tail: [
+//             {x: 1, y: 1, d: "right", h: false},
+//             {x: 2, y: 1, d: "right", h: false},
+//             {x: 3, y: 1, d: "right", h: false},
+//             {x: 4, y: 1, d: "right", h: true}
+//         ],
+//         lastPosTail: {},
+//         direction: "right"
+//     },
+//     food: {
+//         didAte: true,
+//         apples: {}
+//     },
+//     score: 0,
+//     maps: maps,
+//     level: 3,
+//     nextLevel: false,
+//     win: false,
+//     gameOver: false
+// };
+
+const snake = new Snake(store);
+const food = new Food(store);
 const game = new Game({
-    state,
+    store,
     canvas: document.getElementById("game-field"),
     snake,
     food
 });
 
 game.init();
+
+
+
+// store.subscribe(() => {
+//     const state = store.getState();
+//     console.log(state.win);
+//     if(state.gameOver){
+//             animateRAFInterval.cancel();
+//             //document.removeEventListener("keydown", this._onkeydown);
+//     }
+// })
     
 
 // // console.log(state.maps[`map${state.level}`]);
