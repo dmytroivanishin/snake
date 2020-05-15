@@ -1,7 +1,7 @@
 body{
     margin: 0;
     padding: 0;
-    background-color: rgb(56, 94, 129);
+    background-color: #1F293C;
 }
 
 .game-box{
@@ -12,10 +12,10 @@ body{
     width: 600px;
     height: 660px;
     margin: 0 auto;
-    background-color: rgb(147, 161, 173);
+    background-color: #fff;
     &__game-field{
         width: 100%;
         display: block;
-        background-color: rgb(98, 127, 151);
+        background-color: #2a3953;
     }
 }
