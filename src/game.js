@@ -57,7 +57,7 @@ export default class Game {
             this.snake.checkNextLevel();
             this.snake.checkWin();
             this.food.addNewFood();
-            this.snake.moveSnake()
+            this.snake.moveSnake();
             
         }, 500);
         

@@ -1,4 +1,5 @@
 import { mapKeyCode } from './utils';
+import { changeDirection, move, growth, gameOver, nextLevel, win} from './store/action';
 
 export default class Snake {
     constructor(store){
@@ -32,11 +33,11 @@ export default class Snake {
         newMovementSnake = this._setTeleportSnake(newMovementSnake);
         
         if(this._getCollisionSnake(newMovementSnake)){
-            this.store.dispatch({ type: "GAME_OVER" });
+            this.store.dispatch(gameOver());
             return true;
         }
 
-        this.store.dispatch({ type: "MOVE", payload: newMovementSnake });
+        this.store.dispatch(move(newMovementSnake));
 
         this._checkGrowth();
     }
@@ -46,7 +47,7 @@ export default class Snake {
         const direction = mapKeyCode(keyCode);
     
         if(this._hasDirection(snake, direction)) {
-            this.store.dispatch({ type: "CHANGE_DIRECTION", payload: direction });
+            this.store.dispatch(changeDirection(direction));
         }
         else{
             return false;
@@ -60,7 +61,7 @@ export default class Snake {
         const map = maps[`map${level}`];
 
         if(score >= map.completed && level < 4){
-            this.store.dispatch({ type: "NEXT_LEVEL" });
+            this.store.dispatch(nextLevel());
         }
     }
 
@@ -69,7 +70,7 @@ export default class Snake {
         const map = maps[`map${level}`];
 
         if(score >= map.completed && level >= 4){
-            this.store.dispatch({ type: "WIN" });
+            this.store.dispatch(win());
         }
     }
     
@@ -78,7 +79,7 @@ export default class Snake {
         const headSnake = this._getHeadSnake(snake);
 
         if(apples.x === headSnake.x && apples.y === headSnake.y){
-            this.store.dispatch({ type: "GROWTH" });
+            this.store.dispatch(growth());
         }
     }
 

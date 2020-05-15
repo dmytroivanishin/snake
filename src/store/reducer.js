@@ -31,13 +31,11 @@ const initialState = {
     },
     score: 0,
     maps: maps,
-    level: 1,
+    level: 4,
     nextLevel: false,
     win: false,
     gameOver: false
 };
-
-console.log("initialState", { initialState });
 
 const reducer = (state = initialState, action) => {
     switch(action.type){
