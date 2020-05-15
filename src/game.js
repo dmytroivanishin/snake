@@ -7,6 +7,8 @@ export default class Game {
         this.snake = snake;
         this.food = food;
 
+        this.state
+
         this.ctx;
     }
 
@@ -14,16 +16,16 @@ export default class Game {
         window.addEventListener("load", this._onload);
         
         this.store.subscribe(() => {
-            const state = this.store.getState();
+            this.state = this.store.getState();
 
-            if(state.nextLevel){
+            if(this.state.nextLevel){
                 animateRAFInterval.cancel();
             }
-            if(state.win){
+            if(this.state.win){
                 animateRAFInterval.cancel();
                 document.removeEventListener("keydown", this._onkeydown);
             }
-            if(state.gameOver){
+            if(this.state.gameOver){
                 animateRAFInterval.cancel();
                 document.removeEventListener("keydown", this._onkeydown);
             }
@@ -53,13 +55,13 @@ export default class Game {
         this.snake.changeDirection(e.keyCode);
 
         animateRAFInterval.start(() => {
-            
+
             this.snake.checkNextLevel();
             this.snake.checkWin();
             this.food.addNewFood();
             this.snake.moveSnake();
             
-        }, 500);
+        }, this.state.snake.speed);
         
     }
 

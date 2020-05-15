@@ -22,6 +22,7 @@ const initialState = {
             {x: 3, y: 1, d: "right", h: false},
             {x: 4, y: 1, d: "right", h: true}
         ],
+        speed: 300,
         lastPosTail: {},
         direction: "right"
     },
@@ -31,7 +32,7 @@ const initialState = {
     },
     score: 0,
     maps: maps,
-    level: 2,
+    level: 1,
     nextLevel: false,
     win: false,
     gameOver: false
@@ -92,10 +93,15 @@ const reducer = (state = initialState, action) => {
         case "NEXT_LEVEL":
             return {
                 ...initialState,
+                snake: {
+                    ...initialState.snake,
+                    speed: state.snake.speed - 50
+                },
                 win: false,
                 gameOver: false,
                 nextLevel: true,
-                level: state.level + 1
+                level: state.level + 1,
+                
             }
         case "WIN":
             return {
