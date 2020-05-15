@@ -35,17 +35,22 @@ const initialState = {
     level: 1,
     nextLevel: false,
     win: false,
+    gameStart: false,
     gameOver: false
 };
 
 const reducer = (state = initialState, action) => {
     switch(action.type){
+        case "GAME_START":
+            return {
+                ...state,
+                gameStart: true,
+                nextLevel: false,
+            }
         case "CHANGE_DIRECTION":
             return {
                 ...state,
                 nextLevel: false,
-                gameOver: false,
-                win: false,
                 snake: {
                     ...state.snake,
                     direction: action.payload
@@ -55,8 +60,6 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 nextLevel: false,
-                gameOver: false,
-                win: false,
                 snake: {
                     ...state.snake,
                     tail: [ ...moveSnake(state.snake.tail, action.payload) ],
@@ -68,7 +71,6 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 nextLevel: false,
                 gameOver: false,
-                win: false,
                 food: {
                     didAte: false,
                     apples: action.payload
@@ -78,8 +80,6 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 nextLevel: false,
-                gameOver: false,
-                win: false,
                 snake: {
                     ...state.snake,
                     tail: [ state.snake.lastPosTail, ...state.snake.tail ]
@@ -97,8 +97,6 @@ const reducer = (state = initialState, action) => {
                     ...initialState.snake,
                     speed: state.snake.speed - 50
                 },
-                win: false,
-                gameOver: false,
                 nextLevel: true,
                 level: state.level + 1,
                 
@@ -113,6 +111,7 @@ const reducer = (state = initialState, action) => {
         case "GAME_OVER":
             return {
                 ...state,
+                gameStart: false,
                 nextLevel: false,
                 gameOver: true,
                 win: false

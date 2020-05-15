@@ -14,23 +14,31 @@ export default class Game {
 
     init() {
         window.addEventListener("load", this._onload);
-        
+
         this.store.subscribe(() => {
             this.state = this.store.getState();
 
+            this._renderGame();
+
+            if(!this.state.gameStart){
+                this._renderPopup("Press any key");
+            }
             if(this.state.nextLevel){
                 animateRAFInterval.cancel();
             }
             if(this.state.win){
                 animateRAFInterval.cancel();
                 document.removeEventListener("keydown", this._onkeydown);
+                document.removeEventListener("keydown", this._anyKeyDown);
+                this._renderPopup("You win");
             }
             if(this.state.gameOver){
                 animateRAFInterval.cancel();
                 document.removeEventListener("keydown", this._onkeydown);
+                document.removeEventListener("keydown", this._anyKeyDown);
+                this._renderPopup("Game Over");
             }
             
-            this._renderGame();
         })
     }
 
@@ -41,11 +49,18 @@ export default class Game {
         this.ctx = this.canvas.getContext("2d");
 
         this.food.addNewFood();
-        this._renderGame();
+        //this._renderGame();
 
         document.addEventListener("keydown", this._onkeydown);
+        document.addEventListener("keydown", this._anyKeyDown);
     }
 
+    _anyKeyDown = () => {
+        if(!this.state.gameStart){
+            this.store.dispatch({ type: "GAME_START" })
+        }
+        
+    }
     _onkeydown = (e) => {
         animateRAFInterval.cancel();
 
@@ -89,6 +104,7 @@ export default class Game {
 
         this.ctx.fillStyle = "black";
         this.ctx.font = "normal 25px Arial, sans-serif";
+        this.ctx.textAlign = "left";
         this.ctx.textBaseline = "top";
         this.ctx.fillText(score, 60, 19);
 
@@ -99,6 +115,17 @@ export default class Game {
         this.ctx.textAlign = "left";
         this.ctx.font = "normal 25px Arial, sans-serif";
         this.ctx.fillText(`Level: ${level}`, 500, 19);
+    }
+
+    _renderPopup(text) {
+        this.ctx.fillStyle = "#E0CD1E";
+        this.ctx.fillRect(600 / 2 - 100, 660 / 2 - 50, 200, 100);
+
+        this.ctx.fillStyle = "black";
+        this.ctx.textAlign = "center";
+        this.ctx.textBaseline = "middle";
+        this.ctx.font = "normal 25px Arial, sans-serif";
+        this.ctx.fillText(text, 600 / 2, 660 / 2);
     }
 
     _renderSnake(snake, x, y) {
