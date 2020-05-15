@@ -50,7 +50,9 @@ const startRAFInterval = (cb, time = 1) => {
         
     };
 
-    animateRAFInterval.id = requestAnimationFrame(animate);
+    if(!animateRAFInterval.canceled){
+        animateRAFInterval.id = requestAnimationFrame(animate);
+    }
     
 };
 
