@@ -1,3 +1,4 @@
+import { gameStart } from './store/action';
 import { animateRAFInterval } from "./utils";
 
 export default class Game {
@@ -17,12 +18,6 @@ export default class Game {
 
         this.store.subscribe(() => {
             this.state = this.store.getState();
-
-            console.log("gameStart", this.state.gameStart);
-            console.log("nextLevel", this.state.nextLevel);
-            console.log("win", this.state.win);
-            console.log("gameOver", this.state.gameOver);
-            console.log("=====");
             
             this._renderGame();
 
@@ -66,7 +61,7 @@ export default class Game {
 
     _anyKeyDown = () => {
         if(!this.state.gameStart){
-            this.store.dispatch({ type: "GAME_START" });
+            this.store.dispatch(gameStart());
         }
         
     }

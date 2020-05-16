@@ -1,3 +1,5 @@
+import { addFood } from './store/action';
+
 export default class Food {
     constructor(store){
         this.store = store;
@@ -7,7 +9,7 @@ export default class Food {
         const cordsNewFood = this._getFreeSpace();
         
         if(cordsNewFood){
-            this.store.dispatch({ type: "ADD_FOOD", payload: cordsNewFood })
+            this.store.dispatch(addFood(cordsNewFood))
         }
     }
 

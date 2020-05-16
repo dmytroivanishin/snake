@@ -3,7 +3,7 @@ import * as maps from "../maps";
 const moveSnake = (tail, newMovementSnake) => {
     const restSnake = tail.slice(1);
     restSnake[restSnake.length - 1].h = false;
-    
+
     return [
         ...restSnake,
         newMovementSnake
@@ -18,7 +18,7 @@ const initialState = {
             {x: 3, y: 1, d: "right", h: false},
             {x: 4, y: 1, d: "right", h: true}
         ],
-        speed: 300,
+        speed: 1000,
         lastPosTail: {},
         direction: "right"
     },
@@ -46,7 +46,6 @@ const reducer = (state = initialState, action) => {
         case "CHANGE_DIRECTION":
             return {
                 ...state,
-                //nextLevel: false,
                 snake: {
                     ...state.snake,
                     direction: action.payload
@@ -55,7 +54,6 @@ const reducer = (state = initialState, action) => {
         case "MOVE":
             return {
                 ...state,
-                //nextLevel: false,
                 snake: {
                     ...state.snake,
                     tail: [ ...moveSnake(state.snake.tail, action.payload) ],
@@ -65,7 +63,6 @@ const reducer = (state = initialState, action) => {
         case "ADD_FOOD":
             return {
                 ...state,
-                //nextLevel: false,
                 gameOver: false,
                 food: {
                     didAte: false,
@@ -75,7 +72,6 @@ const reducer = (state = initialState, action) => {
         case "GROWTH":
             return {
                 ...state,
-                //nextLevel: false,
                 snake: {
                     ...state.snake,
                     tail: [ state.snake.lastPosTail, ...state.snake.tail ]

@@ -1,5 +1,5 @@
 import { mapKeyCode } from './utils';
-import { changeDirection, move, growth, gameOver, nextLevel, win} from './store/action';
+import { changeDirection, move, growth, gameOver, nextLevel, win } from './store/action';
 
 export default class Snake {
     constructor(store){
