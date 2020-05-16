@@ -18,6 +18,12 @@ export default class Game {
         this.store.subscribe(() => {
             this.state = this.store.getState();
 
+            console.log("gameStart", this.state.gameStart);
+            console.log("nextLevel", this.state.nextLevel);
+            console.log("win", this.state.win);
+            console.log("gameOver", this.state.gameOver);
+            console.log("=====");
+            
             this._renderGame();
 
             if(!this.state.gameStart){
@@ -25,18 +31,21 @@ export default class Game {
             }
             if(this.state.nextLevel){
                 animateRAFInterval.cancel();
+                return true;
             }
             if(this.state.win){
                 animateRAFInterval.cancel();
                 document.removeEventListener("keydown", this._onkeydown);
                 document.removeEventListener("keydown", this._anyKeyDown);
                 this._renderPopup("You win");
+                return true;
             }
             if(this.state.gameOver){
                 animateRAFInterval.cancel();
                 document.removeEventListener("keydown", this._onkeydown);
                 document.removeEventListener("keydown", this._anyKeyDown);
                 this._renderPopup("Game Over");
+                return true;
             }
             
         })
@@ -57,13 +66,14 @@ export default class Game {
 
     _anyKeyDown = () => {
         if(!this.state.gameStart){
-            this.store.dispatch({ type: "GAME_START" })
+            this.store.dispatch({ type: "GAME_START" });
         }
         
     }
     _onkeydown = (e) => {
         animateRAFInterval.cancel();
 
+        
         this.snake.checkNextLevel();
         this.snake.checkWin();
         this.food.addNewFood();
@@ -71,6 +81,7 @@ export default class Game {
 
         animateRAFInterval.start(() => {
 
+           
             this.snake.checkNextLevel();
             this.snake.checkWin();
             this.food.addNewFood();

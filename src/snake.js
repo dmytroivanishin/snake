@@ -33,6 +33,7 @@ export default class Snake {
         newMovementSnake = this._setTeleportSnake(newMovementSnake);
         
         if(this._getCollisionSnake(newMovementSnake)){
+            console.log(newMovementSnake);
             this.store.dispatch(gameOver());
             return true;
         }
