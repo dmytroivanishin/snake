@@ -1,11 +1,14 @@
 import * as maps from "../maps";
 
 const moveSnake = (tail, newMovementSnake) => {
-    const restSnake = tail.slice(1);
-    restSnake[restSnake.length - 1].h = false;
+    const restSnake = tail.slice(1, tail.length - 1);
+
+    const lastHead = { ...tail[tail.length - 1] }
+    lastHead.h = false;
 
     return [
         ...restSnake,
+        lastHead,
         newMovementSnake
     ];
 };
@@ -28,7 +31,7 @@ const initialState = {
     },
     score: 0,
     maps: maps,
-    level: 2,
+    level: 1,
     nextLevel: false,
     win: false,
     gameStart: false,
@@ -41,7 +44,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 gameStart: true,
-                nextLevel: false,
+                nextLevel: false
             }
         case "CHANGE_DIRECTION":
             return {
@@ -66,6 +69,9 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 gameOver: false,
                 nextLevel: false,
+                snake: {
+                    ...state.snake,
+                },
                 food: {
                     didAte: false,
                     apples: action.payload

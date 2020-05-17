@@ -44,8 +44,10 @@ export default class Game {
             }
             if(this.state.win){
                 animateRAFInterval.cancel();
+
                 document.removeEventListener("keydown", this._onkeydown);
                 document.removeEventListener("keydown", this._anyKeyDown);
+
                 this._renderPopup("You win");
 
                 win.play();
@@ -54,8 +56,10 @@ export default class Game {
             }
             if(this.state.gameOver){
                 animateRAFInterval.cancel();
+
                 document.removeEventListener("keydown", this._onkeydown);
                 document.removeEventListener("keydown", this._anyKeyDown);
+
                 this._renderPopup("Game Over");
 
                 gameOver.play();
@@ -93,14 +97,19 @@ export default class Game {
         this.snake.changeDirection(e.keyCode);
 
         animateRAFInterval.start(() => {
-
-            this.snake.checkNextLevel();
+            if(this.snake.checkNextLevel()){
+                return true;
+           }
+            if(this.snake.checkWin()){
+                return true;
+            }
             this.snake.checkWin();
             this.food.addNewFood();
             this.snake.moveSnake();
             
         }, this.state.snake.speed);
-        
+
+        this.snake.moveSnake();
     }
 
     _renderGame() {

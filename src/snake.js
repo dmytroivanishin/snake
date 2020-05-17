@@ -52,9 +52,7 @@ export default class Snake {
         }
         else{
             return false;
-        }
-    
-        this.moveSnake();
+        }     
     };
 
     checkNextLevel() {
@@ -63,6 +61,7 @@ export default class Snake {
 
         if(score >= map.completed && level < 4){
             this.store.dispatch(nextLevel());
+            return true;
         }
     }
 
@@ -72,6 +71,7 @@ export default class Snake {
 
         if(score >= map.completed && level >= 4){
             this.store.dispatch(win());
+            return true;
         }
     }
     
@@ -91,9 +91,9 @@ export default class Snake {
     _hasDirection(snake, direction) {
         const headSnake = this._getHeadSnake(snake);
     
-        if(direction === headSnake.d) {
-            return false;
-        }
+        // if(direction === headSnake.d) {
+        //     return false;
+        // }
     
         if(
             (direction === "left" && headSnake.d !== "right") ||
