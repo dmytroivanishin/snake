@@ -1,15 +1,20 @@
+import buzz from "buzz";
+
+
 import { gameStart } from './store/action';
 import { animateRAFInterval } from "./utils";
 
+
+
 export default class Game {
-    constructor({ store, canvas, snake, food }) {
+    constructor({ store, sounds, canvas, snake, food }) {
         this.store = store;
+        this.sounds = sounds;
         this.canvas = canvas;
         this.snake = snake;
         this.food = food;
 
-        this.state
-
+        this.state;
         this.ctx;
     }
 
@@ -18,14 +23,23 @@ export default class Game {
 
         this.store.subscribe(() => {
             this.state = this.store.getState();
-            
+
+            const { playlist } = this.sounds;
+            const { eat, nextLevel, gameOver, win } = playlist;
+
             this._renderGame();
 
             if(!this.state.gameStart){
                 this._renderPopup("Press any key");
             }
+            if(this.state.food.didAte){
+                eat.play();
+            }
             if(this.state.nextLevel){
                 animateRAFInterval.cancel();
+
+                nextLevel.play();
+
                 return true;
             }
             if(this.state.win){
@@ -33,6 +47,9 @@ export default class Game {
                 document.removeEventListener("keydown", this._onkeydown);
                 document.removeEventListener("keydown", this._anyKeyDown);
                 this._renderPopup("You win");
+
+                win.play();
+
                 return true;
             }
             if(this.state.gameOver){
@@ -40,6 +57,9 @@ export default class Game {
                 document.removeEventListener("keydown", this._onkeydown);
                 document.removeEventListener("keydown", this._anyKeyDown);
                 this._renderPopup("Game Over");
+
+                gameOver.play();
+
                 return true;
             }
             
@@ -53,7 +73,6 @@ export default class Game {
         this.ctx = this.canvas.getContext("2d");
 
         this.food.addNewFood();
-        //this._renderGame();
 
         document.addEventListener("keydown", this._onkeydown);
         document.addEventListener("keydown", this._anyKeyDown);
@@ -68,7 +87,6 @@ export default class Game {
     _onkeydown = (e) => {
         animateRAFInterval.cancel();
 
-        
         this.snake.checkNextLevel();
         this.snake.checkWin();
         this.food.addNewFood();
@@ -76,7 +94,6 @@ export default class Game {
 
         animateRAFInterval.start(() => {
 
-           
             this.snake.checkNextLevel();
             this.snake.checkWin();
             this.food.addNewFood();

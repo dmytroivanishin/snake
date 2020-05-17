@@ -18,7 +18,7 @@ const initialState = {
             {x: 3, y: 1, d: "right", h: false},
             {x: 4, y: 1, d: "right", h: true}
         ],
-        speed: 1000,
+        speed: 300,
         lastPosTail: {},
         direction: "right"
     },
@@ -28,7 +28,7 @@ const initialState = {
     },
     score: 0,
     maps: maps,
-    level: 1,
+    level: 2,
     nextLevel: false,
     win: false,
     gameStart: false,
@@ -54,6 +54,7 @@ const reducer = (state = initialState, action) => {
         case "MOVE":
             return {
                 ...state,
+                nextLevel: false,
                 snake: {
                     ...state.snake,
                     tail: [ ...moveSnake(state.snake.tail, action.payload) ],
@@ -64,6 +65,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 gameOver: false,
+                nextLevel: false,
                 food: {
                     didAte: false,
                     apples: action.payload
@@ -72,6 +74,7 @@ const reducer = (state = initialState, action) => {
         case "GROWTH":
             return {
                 ...state,
+                nextLevel: false,
                 snake: {
                     ...state.snake,
                     tail: [ state.snake.lastPosTail, ...state.snake.tail ]
