@@ -7,15 +7,6 @@ import store from "./store";
 
 import "./index.scss";
 
-// const settings = {
-//     width: 600,
-//     height: 660,
-//     sizeGrid: 600,
-//     sizeRow: 20,
-//     sizeCeil: 30,
-//     scoreBoard: 60
-// };
-
 const sounds = new Sounds();
 
 sounds.add("eat", ["sounds/eat.mp3", "sounds/eat.ogg"]);

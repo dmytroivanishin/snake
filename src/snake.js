@@ -91,10 +91,6 @@ export default class Snake {
     _hasDirection(snake, direction) {
         const headSnake = this._getHeadSnake(snake);
     
-        // if(direction === headSnake.d) {
-        //     return false;
-        // }
-    
         if(
             (direction === "left" && headSnake.d !== "right") ||
             (direction === "right" && headSnake.d !== "left") ||
