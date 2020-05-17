@@ -5,6 +5,8 @@ import Food from "./food";
 
 import store from "./store";
 
+import "./index.scss";
+
 // const settings = {
 //     width: 600,
 //     height: 660,

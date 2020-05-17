@@ -1,6 +1,3 @@
-import buzz from "buzz";
-
-
 import { gameStart } from './store/action';
 import { animateRAFInterval } from "./utils";
 

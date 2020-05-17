@@ -5,18 +5,14 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = (env) => {
-    console.log(env);
     const { mode } = env;
 
     isDev = mode === "development";
 
-    console.log(isDev);
-
     return {
         mode: mode,
         entry: [
-            "./src/index.js",
-            "./src/index.scss"
+            "./src/index.js"
         ],
         output: {
             filename: "./js/bundle.[hash].js",
