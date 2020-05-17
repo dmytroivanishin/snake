@@ -29,9 +29,6 @@ export default class Game {
 
             this._renderGame();
 
-            if(!this.state.gameStart){
-                this._renderPopup("Press any key");
-            }
             if(this.state.food.didAte){
                 eat.play();
             }
@@ -76,13 +73,14 @@ export default class Game {
         
         this.ctx = this.canvas.getContext("2d");
 
-        this.food.addNewFood();
-
         document.addEventListener("keydown", this._onkeydown);
-        document.addEventListener("keydown", this._anyKeyDown);
+        document.addEventListener("keydown", this._onStartGame);
+
+        this.state = this.store.getState();
+        this._renderGame();
     }
 
-    _anyKeyDown = () => {
+    _onStartGame = () => {
         if(!this.state.gameStart){
             this.store.dispatch(gameStart());
         }
@@ -97,13 +95,13 @@ export default class Game {
         this.snake.changeDirection(e.keyCode);
 
         animateRAFInterval.start(() => {
+            
             if(this.snake.checkNextLevel()){
                 return true;
            }
             if(this.snake.checkWin()){
                 return true;
             }
-            this.snake.checkWin();
             this.food.addNewFood();
             this.snake.moveSnake();
             
@@ -115,7 +113,7 @@ export default class Game {
     _renderGame() {
         this.ctx.clearRect(0, 0, 600, 660);
 
-        const { snake, food, maps, level, score } = this.store.getState();
+        const { snake, food, maps, level, score, gameStart } = this.state;
 
         this._renderScoreboard(score, level);
 
@@ -127,6 +125,10 @@ export default class Game {
                 this._renderFood(food, x, y);  
 
             }
+        }
+
+        if(!gameStart){
+            this._renderPopup("Press any key");
         }
     };
 
