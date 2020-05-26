@@ -8,7 +8,9 @@ class Sounds {
     add(name, arg) {
         this.playlist[name] = new Howl({
             src: arg
-        })
+        });
+
+        return this;
     }
 };
 
