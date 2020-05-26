@@ -80,7 +80,7 @@ const reducer = (state = initialState, action) => {
                 snake: {
                     ...state.snake,
                     tail: [ state.snake.lastPosTail, ...state.snake.tail ],
-                    speed: state.snake.speed - 50
+                    speed: state.snake.speed - 0.5
                 },
                 food: {
                     didAte: true,
