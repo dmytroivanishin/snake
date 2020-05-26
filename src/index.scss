@@ -21,7 +21,63 @@ body{
     }
 }
 
+.controls{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    display: none;
+    div{
+        position: absolute;
+        transition: all .2s ease-in-out;
+    }
+    &__left{
+        width: 50vw;
+        height: 50vh;
+        top: 25vh;
+        left: 0;
+        right: auto;
+        background-color: #fff;
+        opacity: 0;
+    }
+    &__top{
+        width: 100vw;
+        height: 25%;
+        top: 0;
+        left: 0;
+        bottom: auto;
+        background-color: #fff;
+        opacity: 0;
+    }
+    &__bottom{
+        width: 100vw;
+        height: 25%;
+        top: auto;
+        left: 0;
+        bottom: 0;
+        background-color: #fff;
+        opacity: 0;
+    }
+    &__right{
+        width: 50vw;
+        height: 50vh;
+        top: 25vh;
+        right: 0;
+        left: auto;
+        background-color: #fff;
+        opacity: 0;
+    }
+    div:active{
+        opacity: 0.2;
+    }
+}
+
 @media screen and (max-height: 661px) and (orientation: landscape){
+    .controls{
+        display: block;
+    }
     .game-box{
         width: auto;
         height: 100%;
@@ -31,7 +87,10 @@ body{
     }
 }
 
-@media screen and (max-width: 768px) and (orientation: portrait){
+@media screen and (max-width: 992px) and (orientation: portrait){
+    .controls{
+        display: block;
+    }
     .game-box{
         width: 100%;
         height: auto;

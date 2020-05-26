@@ -30,7 +30,9 @@ export default class Game {
         
         this.ctx = this.canvas.getContext("2d");
 
-        document.addEventListener("keydown", this._onkeydown);
+        document.addEventListener("keydown", this._onkeydown, false);
+        document.addEventListener("click", this._onkeydown, false);
+        document.addEventListener("touchstart", this._onkeydown, false);
 
         this.state = this.store.getState();
         this._renderGame(this.state);
@@ -66,11 +68,15 @@ export default class Game {
                     if(this.state.win){
                         animateRAFInterval.cancel();
                         document.removeEventListener("keydown", this._onkeydown);
+                        document.addEventListener("click", this._onkeydown);
+                        document.addEventListener("touchstart", this._onkeydown);
                         win.play();
                     }
                     if(this.state.gameOver){
                         animateRAFInterval.cancel();
                         document.removeEventListener("keydown", this._onkeydown);
+                        document.addEventListener("click", this._onkeydown);
+                        document.addEventListener("touchstart", this._onkeydown);
                         gameOver.play();
                     }
                 }
@@ -79,11 +85,15 @@ export default class Game {
     }
 
     _onkeydown = (e) => {
+        let keyKode;
+
         if(!this.state.gameStart){
             this.store.dispatch(gameStart());
         }
 
-        this.snake.changeDirection(e.keyCode);
+        keyKode = e.type === "keydown" ? e.keyCode : +e.target.dataset.direction;
+
+        this.snake.changeDirection(keyKode);
     }
 
     _renderGame(state) {
