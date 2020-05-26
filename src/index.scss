@@ -10,12 +10,35 @@ body{
     left: 50%;
     transform: translate(-50% , -50%);
     width: 600px;
-    height: auto;
+    height: 660px;
     margin: 0 auto;
     background-color: #2a3953;
     &__game-field{
         width: 100%;
+        height: 100%;
         display: block;
         background-color: #2a3953;
     }
 }
+
+@media screen and (max-height: 661px) and (orientation: landscape){
+    .game-box{
+        width: auto;
+        height: 100%;
+        &__game-field{
+            width: auto;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) and (orientation: portrait){
+    .game-box{
+        width: 100%;
+        height: auto;
+        &__game-field{
+            width: 100%;
+            height: auto;
+        }
+    }
+}
+
