@@ -1,4 +1,5 @@
 import { addFood } from './store/action';
+import { row } from "./settings";
 
 export default class Food {
     constructor(store){
@@ -31,8 +32,8 @@ export default class Food {
     
         while(isNewCordsFood){
     
-            x =  this._getRandomPosition(20),
-            y =  this._getRandomPosition(20);
+            x =  this._getRandomPosition(row),
+            y =  this._getRandomPosition(row);
     
             for(let t = 0; t < tail.length; t+=1){
                 if(tail[t].x === x && tail[t].y === y){

@@ -69,6 +69,4 @@ generateMap(map4, "x", 7, 13, 10);
 generateMap(map4, "x", 7, 13, 11);
 generateMap(map4, "x", 7, 13, 12);
 
-console.log( map1.completed, map2.completed, map3.completed, map4.completed );
-
 export { map1, map2, map3, map4 };

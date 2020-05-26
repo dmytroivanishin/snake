@@ -1,4 +1,5 @@
 import { mapKeyCode } from './utils';
+import { row } from "./settings";
 import { changeDirection, move, growth, gameOver, nextLevel, win } from './store/action';
 
 export default class Snake {
@@ -124,16 +125,18 @@ export default class Snake {
     _setTeleportSnake(newHeadSnake) {
         const { snake: { direction } } = this.store.getState();
 
-        if(newHeadSnake.x > 19 && direction === "right"){
+        const rowEdge = row - 1;
+
+        if(newHeadSnake.x > rowEdge && direction === "right"){
             return { x: 0, y: newHeadSnake.y, d: direction, h: true };
         }
         if(newHeadSnake.x < 0 && direction === "left"){
-            return { x: 19, y: newHeadSnake.y, d: direction, h: true };
+            return { x: rowEdge, y: newHeadSnake.y, d: direction, h: true };
         }
         if(newHeadSnake.y < 0 && direction === "up"){
-            return { x: newHeadSnake.x, y: 19, d: direction, h: true };
+            return { x: newHeadSnake.x, y: rowEdge, d: direction, h: true };
         }
-        if(newHeadSnake.y > 19 && direction === "down"){
+        if(newHeadSnake.y > rowEdge && direction === "down"){
             return { x: newHeadSnake.x, y: 0, d: direction, h: true };
         }
 

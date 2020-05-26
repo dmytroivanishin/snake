@@ -1,5 +1,6 @@
 import { gameStart } from './store/action';
 import { animateRAFInterval } from "./utils";
+import { width, height, board, popup, ceil, row, colors } from "./settings";
 
 export default class Game {
     constructor({ canvas, store, sounds, snake, food }) {
@@ -24,8 +25,8 @@ export default class Game {
     }
 
     _onload = () => {
-        this.canvas.width = 600;
-        this.canvas.height = 660;
+        this.canvas.width = width;
+        this.canvas.height = height;
         
         this.ctx = this.canvas.getContext("2d");
 
@@ -86,14 +87,14 @@ export default class Game {
     }
 
     _renderGame(state) {
-        this.ctx.clearRect(0, 0, 600, 660);
+        this.ctx.clearRect(0, 0, width, height);
 
         const { snake, food, maps, level, score, gameStart, win, gameOver } = state;
 
         this._renderScoreboard(score, level);
 
-        for(let y = 0; y < 20; y+=1) {
-            for(let x = 0; x < 20; x+=1) {
+        for(let y = 0; y < row; y+=1) {
+            for(let x = 0; x < row; x+=1) {
 
                 this._renderSnake(snake, x, y);
                 this._renderMap(maps[`map${level}`], x, y);
@@ -115,43 +116,48 @@ export default class Game {
     };
 
     _renderScoreboard(score, level) {
-        this.ctx.fillStyle = "#E0CD1E";
-        this.ctx.fillRect(0, 0, 600, 60);
+        this.ctx.fillStyle = colors.popup;
+        this.ctx.fillRect(0, 0, board.width, board.height);
 
-        this.ctx.fillStyle = "black";
-        this.ctx.font = "normal 25px Arial, sans-serif";
+        this.ctx.fillStyle = colors.text;
+        this.ctx.font = board.font;
         this.ctx.textAlign = "left";
         this.ctx.textBaseline = "top";
-        this.ctx.fillText(score, 60, 19);
+        this.ctx.fillText(score, board.textScore.x, board.textScore.y);
 
-        this.ctx.fillStyle = "#D86464";
-        this.ctx.fillRect(15, 15, 30, 30);
+        this.ctx.fillStyle = colors.apple;
+        this.ctx.fillRect(board.apple.x, board.apple.y, ceil, ceil);
 
-        this.ctx.fillStyle = "black";
+        this.ctx.fillStyle = colors.text;
         this.ctx.textAlign = "left";
-        this.ctx.font = "normal 25px Arial, sans-serif";
-        this.ctx.fillText(`Level: ${level}`, 500, 19);
+        this.ctx.font = board.font;
+        this.ctx.fillText(`Level: ${level}`, board.textLevel.x, board.textLevel.y);
     }
 
     _renderPopup(text) {
-        this.ctx.fillStyle = "#E0CD1E";
-        this.ctx.fillRect(600 / 2 - 100, 660 / 2 - 50, 200, 100);
+        const halfW = (width / 2),
+              halfH = (height / 2),
+              x = halfW - (popup.width / 2),
+              y = halfH - (popup.height / 2);       
 
-        this.ctx.fillStyle = "black";
+        this.ctx.fillStyle = colors.popup;
+        this.ctx.fillRect(x, y, popup.width, popup.height);
+
+        this.ctx.fillStyle = colors.text;
         this.ctx.textAlign = "center";
         this.ctx.textBaseline = "middle";
-        this.ctx.font = "normal 25px Arial, sans-serif";
-        this.ctx.fillText(text, 600 / 2, 660 / 2);
+        this.ctx.font = popup.font;
+        this.ctx.fillText(text, halfW, halfH);
     }
 
     _renderSnake(snake, x, y) {
         for(let s = 0; s < snake.tail.length; s+=1) {
             if(x === snake.tail[s].x && y === snake.tail[s].y) {
-                this.ctx.fillStyle = "#1FB9DD";
-                this.ctx.fillRect(x*30, y*30 + 60, 30, 30);
+                this.ctx.fillStyle = colors.snakeBody;
+                this.ctx.fillRect(x*ceil, y*ceil + board.height, ceil, ceil);
                 if(snake.tail[s].h){
-                    this.ctx.fillStyle = "aqua";
-                    this.ctx.fillRect(x*30, y*30 + 60, 30, 30);
+                    this.ctx.fillStyle = colors.snakeHead;
+                    this.ctx.fillRect(x*ceil, y*ceil + board.height, ceil, ceil);
                 }
             }
         }
@@ -159,16 +165,16 @@ export default class Game {
 
     _renderFood(food, x, y) {
         if(x === food.apples.x && y === food.apples.y) {
-            this.ctx.fillStyle = "#D86464";
-            this.ctx.fillRect(x*30, y*30 + 60, 30, 30);
+            this.ctx.fillStyle = colors.apple;
+            this.ctx.fillRect(x*ceil, y*ceil + board.height, ceil, ceil);
         }
     }
 
     _renderMap(map, x, y) {
         for(let m = 0; m < map.cords.length; m+=1) {
             if(map.cords[m].x === x && map.cords[m].y === y) {
-                this.ctx.fillStyle = "#425870";
-                this.ctx.fillRect(x*30, y*30 + 60, 30, 30);
+                this.ctx.fillStyle = colors.wall;
+                this.ctx.fillRect(x*ceil, y*ceil + board.height, ceil, ceil);
             }
         }
     }
