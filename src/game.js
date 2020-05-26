@@ -1,13 +1,11 @@
 import { gameStart } from './store/action';
 import { animateRAFInterval } from "./utils";
 
-
-
 export default class Game {
-    constructor({ store, sounds, canvas, snake, food }) {
+    constructor({ canvas, store, sounds, snake, food }) {
+        this.canvas = canvas;
         this.store = store;
         this.sounds = sounds;
-        this.canvas = canvas;
         this.snake = snake;
         this.food = food;
 
@@ -21,47 +19,8 @@ export default class Game {
         this.store.subscribe(() => {
             this.state = this.store.getState();
 
-            const { playlist } = this.sounds;
-            const { eat, nextLevel, gameOver, win } = playlist;
-
-            this._renderGame();
-
-            if(this.state.food.didAte){
-                eat.play();
-            }
-            if(this.state.nextLevel){
-                animateRAFInterval.cancel();
-
-                nextLevel.play();
-
-                return true;
-            }
-            if(this.state.win){
-                animateRAFInterval.cancel();
-
-                document.removeEventListener("keydown", this._onkeydown);
-                document.removeEventListener("keydown", this._anyKeyDown);
-
-                this._renderPopup("You win");
-
-                win.play();
-
-                return true;
-            }
-            if(this.state.gameOver){
-                animateRAFInterval.cancel();
-
-                document.removeEventListener("keydown", this._onkeydown);
-                document.removeEventListener("keydown", this._anyKeyDown);
-
-                this._renderPopup("Game Over");
-
-                gameOver.play();
-
-                return true;
-            }
-            
-        })
+            this._renderGame(this.state);            
+        });
     }
 
     _onload = () => {
@@ -71,46 +30,65 @@ export default class Game {
         this.ctx = this.canvas.getContext("2d");
 
         document.addEventListener("keydown", this._onkeydown);
-        document.addEventListener("keydown", this._onStartGame);
 
         this.state = this.store.getState();
-        this._renderGame();
+        this._renderGame(this.state);
+
+        let rest				= 0,
+            previosMillisecond	= 0,
+            currentMillisecond	= 0;
+
+        animateRAFInterval.start((time) => {
+            rest = time % this.state.snake.speed;
+            currentMillisecond = time - rest;
+
+            if(previosMillisecond !== currentMillisecond && previosMillisecond < currentMillisecond){
+                previosMillisecond = currentMillisecond;
+
+                if(this.state.gameStart){
+
+                    this.snake.checkNextLevel();
+                    this.snake.checkWin();
+                    this.food.addNewFood();
+                    this.snake.moveSnake();
+
+                    const { playlist } = this.sounds;
+                    const { eat, nextLevel, gameOver, win } = playlist;
+
+                    if(this.state.food.didAte){
+                        eat.play();
+                    }
+                    
+                    if(this.state.nextLevel){
+                        nextLevel.play();
+                    }
+                    if(this.state.win){
+                        animateRAFInterval.cancel();
+                        document.removeEventListener("keydown", this._onkeydown);
+                        win.play();
+                    }
+                    if(this.state.gameOver){
+                        animateRAFInterval.cancel();
+                        document.removeEventListener("keydown", this._onkeydown);
+                        gameOver.play();
+                    }
+                }
+            }
+        });
     }
 
-    _onStartGame = () => {
+    _onkeydown = (e) => {
         if(!this.state.gameStart){
             this.store.dispatch(gameStart());
         }
-        
-    }
-    _onkeydown = (e) => {
-        animateRAFInterval.cancel();
 
-        this.snake.checkNextLevel();
-        this.snake.checkWin();
-        this.food.addNewFood();
         this.snake.changeDirection(e.keyCode);
-
-        animateRAFInterval.start(() => {
-            
-            if(this.snake.checkNextLevel()){
-                return true;
-           }
-            if(this.snake.checkWin()){
-                return true;
-            }
-            this.food.addNewFood();
-            this.snake.moveSnake();
-            
-        }, this.state.snake.speed);
-
-        this.snake.moveSnake();
     }
 
-    _renderGame() {
+    _renderGame(state) {
         this.ctx.clearRect(0, 0, 600, 660);
 
-        const { snake, food, maps, level, score, gameStart } = this.state;
+        const { snake, food, maps, level, score, gameStart, win, gameOver } = state;
 
         this._renderScoreboard(score, level);
 
@@ -126,6 +104,13 @@ export default class Game {
 
         if(!gameStart){
             this._renderPopup("Press any key");
+        }
+
+        if(win){
+            this._renderPopup("You win");
+        }
+        if(gameOver){
+            this._renderPopup("Game Over");
         }
     };
 

@@ -57,7 +57,6 @@ const reducer = (state = initialState, action) => {
         case "MOVE":
             return {
                 ...state,
-                nextLevel: false,
                 snake: {
                     ...state.snake,
                     tail: [ ...moveSnake(state.snake.tail, action.payload) ],
@@ -67,8 +66,6 @@ const reducer = (state = initialState, action) => {
         case "ADD_FOOD":
             return {
                 ...state,
-                gameOver: false,
-                nextLevel: false,
                 snake: {
                     ...state.snake,
                 },
@@ -80,10 +77,10 @@ const reducer = (state = initialState, action) => {
         case "GROWTH":
             return {
                 ...state,
-                nextLevel: false,
                 snake: {
                     ...state.snake,
-                    tail: [ state.snake.lastPosTail, ...state.snake.tail ]
+                    tail: [ state.snake.lastPosTail, ...state.snake.tail ],
+                    speed: state.snake.speed - 50
                 },
                 food: {
                     didAte: true,
@@ -96,7 +93,7 @@ const reducer = (state = initialState, action) => {
                 ...initialState,
                 snake: {
                     ...initialState.snake,
-                    speed: state.snake.speed - 50
+                    
                 },
                 nextLevel: true,
                 level: state.level + 1,

@@ -11,7 +11,6 @@ export default class Snake {
         const headSnake = this._getHeadSnake(snake);
         const direction = snake.direction;
         let newMovementSnake;
-        let lastPosTail;
 
         if(direction === "left"){
             newMovementSnake =  { x: headSnake.x - 1, y: headSnake.y, d: direction, h: true };
@@ -33,7 +32,6 @@ export default class Snake {
         newMovementSnake = this._setTeleportSnake(newMovementSnake);
         
         if(this._getCollisionSnake(newMovementSnake)){
-            console.log(newMovementSnake);
             this.store.dispatch(gameOver());
             return true;
         }

@@ -12,7 +12,7 @@ const animateRAFInterval = {
     }
 };
 
-const startRAFInterval = (cb, time = 1) => {
+const startRAFInterval = (cb) => {
 
     if(!cb){
         throw new Error("Callback function is undefined.");
@@ -22,27 +22,10 @@ const startRAFInterval = (cb, time = 1) => {
     }
     
     animateRAFInterval.canceled = false;
-
-    let startTime			= null,
-        currentTime			= 0,
-        rest				= 0,
-        previosMillisecond	= 0,
-        currentMillisecond	= 0;
     
-    const animate = () => {
-        currentTime = new Date().getTime();
+    const animate = (time) => {
 
-        if (startTime === null) {
-            startTime = currentTime;
-        }
-        
-        rest = (currentTime - startTime) % time;
-        currentMillisecond = (currentTime - startTime) - rest;
-
-        if(previosMillisecond !== currentMillisecond){
-            previosMillisecond = currentMillisecond;
-            cb(currentMillisecond);
-        }
+        cb(time);
         
         if(!animateRAFInterval.canceled){
             animateRAFInterval.id = requestAnimationFrame(animate);
