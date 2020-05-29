@@ -1,4 +1,4 @@
-let width, height, board, popup, ceil, row, colors;
+let width, height, board, popup, ceil, row, colors, levelsAmount;
 
 width = 600;
 
@@ -40,4 +40,6 @@ colors = {
     popup: "#e0cd1e"
 };
 
-export { width, height, board, popup, ceil, row, colors };
+levelsAmount = 5;
+
+export { width, height, board, popup, ceil, row, colors, levelsAmount };

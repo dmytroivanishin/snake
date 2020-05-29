@@ -21,7 +21,7 @@ const initialState = {
             {x: 3, y: 1, d: "right", h: false},
             {x: 4, y: 1, d: "right", h: true}
         ],
-        speed: 300,
+        speed: 100,
         lastPosTail: {},
         direction: "right"
     },

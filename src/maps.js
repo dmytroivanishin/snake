@@ -1,18 +1,18 @@
 const map1 = {
     cords: [],
-    completed: 394
+    completed: 2
 };
 const map2 = {
     cords: [],
-    completed: 394
+    completed: 46
 };
 const map3 = {
     cords: [],
-    completed: 394
+    completed: 114
 };
 const map4 = {
     cords: [],
-    completed: 394
+    completed: 158
 };
 
 const generateMap = (map, axis, from, to, numRestAxis) => {
