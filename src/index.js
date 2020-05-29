@@ -18,7 +18,7 @@ const snake = new Snake(store);
 const food = new Food(store);
 
 const game = new Game({
-    canvas: document.getElementById("game-field"),
+    canvas: document.getElementById("canvas"),
     store,
     sounds,
     snake,
