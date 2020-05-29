@@ -1,4 +1,4 @@
-let width, height, board, popup, ceil, row, colors, levelsAmount;
+let width, height, board, popup, ceil, row, colors, amountLevels;
 
 width = 600;
 
