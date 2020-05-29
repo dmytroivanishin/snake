@@ -40,6 +40,6 @@ colors = {
     popup: "#e0cd1e"
 };
 
-levelsAmount = 5;
+amountLevels = 4;
 
-export { width, height, board, popup, ceil, row, colors, levelsAmount };
+export { width, height, board, popup, ceil, row, colors, amountLevels };

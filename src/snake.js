@@ -1,5 +1,5 @@
 import { mapKeyCode } from './utils';
-import { row, levelsAmount } from "./settings";
+import { row, amountLevels } from "./settings";
 import { changeDirection, move, growth, gameOver, nextLevel, win } from './store/action';
 
 export default class Snake {
@@ -58,7 +58,7 @@ export default class Snake {
         const { score, maps, level } = this.store.getState();
         const map = maps[`map${level}`];
 
-        if(score >= map.completed && level < levelsAmount){
+        if(score >= map.completed && level < amountLevels){
             this.store.dispatch(nextLevel());
             return true;
         }
@@ -68,7 +68,7 @@ export default class Snake {
         const { score, maps, level } = this.store.getState();
         const map = maps[`map${level}`];
 
-        if(score >= map.completed && level >= levelsAmount){
+        if(score >= map.completed && level >= amountLevels){
             this.store.dispatch(win());
             return true;
         }
