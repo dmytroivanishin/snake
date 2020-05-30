@@ -161,16 +161,16 @@ export default class Game {
     }
 
     _renderSnake(snake, x, y) {
-        for(let s = 0; s < snake.tail.length; s+=1) {
-            if(x === snake.tail[s].x && y === snake.tail[s].y) {
+        snake.tail.forEach(s => {
+            if(s.x === x && s.y === y) {
                 this.ctx.fillStyle = colors.snakeBody;
                 this.ctx.fillRect(x*ceil, y*ceil + board.height, ceil, ceil);
-                if(snake.tail[s].h){
+                if(s.h){
                     this.ctx.fillStyle = colors.snakeHead;
                     this.ctx.fillRect(x*ceil, y*ceil + board.height, ceil, ceil);
                 }
             }
-        }
+        });
     }
 
     _renderFood(food, x, y) {
@@ -181,11 +181,11 @@ export default class Game {
     }
 
     _renderMap(map, x, y) {
-        for(let m = 0; m < map.cords.length; m+=1) {
-            if(map.cords[m].x === x && map.cords[m].y === y) {
+        map.cords.forEach(m => {
+            if(m.x === x && m.y === y) {
                 this.ctx.fillStyle = colors.wall;
                 this.ctx.fillRect(x*ceil, y*ceil + board.height, ceil, ceil);
             }
-        }
+        });
     }
 };
