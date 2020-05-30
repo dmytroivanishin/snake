@@ -5,10 +5,10 @@ import { width, height, board, popup, ceil, row, colors } from "./settings";
 export default class Game {
     constructor({ canvas, store, sounds, snake, food }) {
         this.canvas = canvas;
-        this.store = store;
+        this.store  = store;
         this.sounds = sounds;
-        this.snake = snake;
-        this.food = food;
+        this.snake  = snake;
+        this.food   = food;
 
         this.state;
         this.ctx;
@@ -25,8 +25,8 @@ export default class Game {
     }
 
     _onload = () => {
-        this.canvas.width = width;
-        this.canvas.height = height;
+        this.canvas.width   = width;
+        this.canvas.height  = height;
         
         this.ctx = this.canvas.getContext("2d");
 
@@ -37,16 +37,26 @@ export default class Game {
         this.state = this.store.getState();
         this._renderGame(this.state);
 
-        let rest				= 0,
-            previosMillisecond	= 0,
-            currentMillisecond	= 0;
+        let startTime       = 0,
+            currentTime     = 0,
+            time            = 0,
+            previosSecond   = 0,
+            currentSecond   = 0;
 
-        animateRAFInterval.start((time) => {
-            rest = time % this.state.snake.speed;
-            currentMillisecond = time - rest;
+        animateRAFInterval.start(() => {
 
-            if(previosMillisecond !== currentMillisecond && previosMillisecond < currentMillisecond){
-                previosMillisecond = currentMillisecond;
+            if(startTime === 0){
+                startTime = new Date().getTime();
+            }
+
+            currentTime     = new Date().getTime();
+            time            = currentTime - startTime;
+            currentSecond   = Math.floor(time / this.state.snake.speed);
+
+            if(previosSecond < currentSecond){
+
+                startTime = 0;
+                previosSecond = 0;
 
                 if(this.state.gameStart){
 
@@ -129,34 +139,34 @@ export default class Game {
         this.ctx.fillStyle = colors.popup;
         this.ctx.fillRect(0, 0, board.width, board.height);
 
-        this.ctx.fillStyle = colors.text;
-        this.ctx.font = board.font;
-        this.ctx.textAlign = "left";
-        this.ctx.textBaseline = "top";
+        this.ctx.fillStyle      = colors.text;
+        this.ctx.font           = board.font;
+        this.ctx.textAlign      = "left";
+        this.ctx.textBaseline   = "top";
         this.ctx.fillText(score, board.textScore.x, board.textScore.y);
 
         this.ctx.fillStyle = colors.apple;
         this.ctx.fillRect(board.apple.x, board.apple.y, ceil, ceil);
 
-        this.ctx.fillStyle = colors.text;
-        this.ctx.textAlign = "left";
-        this.ctx.font = board.font;
+        this.ctx.fillStyle  = colors.text;
+        this.ctx.textAlign  = "left";
+        this.ctx.font       = board.font;
         this.ctx.fillText(`Level: ${level}`, board.textLevel.x, board.textLevel.y);
     }
 
     _renderPopup(text) {
         const halfW = (width / 2),
               halfH = (height / 2),
-              x = halfW - (popup.width / 2),
-              y = halfH - (popup.height / 2);       
+              x     = halfW - (popup.width / 2),
+              y     = halfH - (popup.height / 2);       
 
         this.ctx.fillStyle = colors.popup;
         this.ctx.fillRect(x, y, popup.width, popup.height);
 
-        this.ctx.fillStyle = colors.text;
-        this.ctx.textAlign = "center";
-        this.ctx.textBaseline = "middle";
-        this.ctx.font = popup.font;
+        this.ctx.fillStyle      = colors.text;
+        this.ctx.textAlign      = "center";
+        this.ctx.textBaseline   = "middle";
+        this.ctx.font           = popup.font;
         this.ctx.fillText(text, halfW, halfH);
     }
 

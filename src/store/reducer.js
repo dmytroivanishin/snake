@@ -67,7 +67,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 snake: {
-                    ...state.snake,
+                    ...state.snake
                 },
                 food: {
                     didAte: false,

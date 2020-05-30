@@ -20,10 +20,10 @@ export default class Food {
     
     _getFreeSpace() {
         const { snake, food, maps, level } = this.store.getState();
-        const { tail } =  snake;
-        const { didAte } =  food;
-        const map = maps[`map${level}`];
-        let isNewCordsFood = true,
+        const { tail }      =  snake;
+        const { didAte }    =  food;
+        const map           = maps[`map${level}`];
+        let isNewCordsFood  = true,
             x, y;
     
         if(!didAte){
