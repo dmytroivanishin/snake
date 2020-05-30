@@ -30,7 +30,7 @@ export default class Snake {
             return false;
         }
 
-        newMovementSnake = this._setTeleportSnake(newMovementSnake);
+        newMovementSnake = this._setTeleportSnake(snake, newMovementSnake);
         
         if(this._getCollisionSnake(newMovementSnake)){
             this.store.dispatch(gameOver());
@@ -122,8 +122,8 @@ export default class Snake {
         }
     }
 
-    _setTeleportSnake(newHeadSnake) {
-        const { snake: { direction } } = this.store.getState();
+    _setTeleportSnake(snake, newHeadSnake) {
+        const { direction } = snake;
 
         const rowEdge = row - 1;
 
