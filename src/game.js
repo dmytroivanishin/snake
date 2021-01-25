@@ -1,5 +1,5 @@
 import { gameStart } from './store/action';
-import { animateRAFInterval } from "./utils";
+import { animateRAFInterval, getCurrentMap } from "./utils";
 import { width, height, board, popup, ceil, row, colors } from "./settings";
 
 export default class Game {
@@ -113,7 +113,7 @@ export default class Game {
             for(let x = 0; x < row; x+=1) {
 
                 this._renderSnake(snake, x, y);
-                this._renderMap(maps[`map${level}`], x, y);
+                this._renderMap(getCurrentMap(maps, level), x, y);
                 this._renderFood(food, x, y);  
 
             }

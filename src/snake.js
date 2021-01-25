@@ -1,4 +1,4 @@
-import { mapKeyCode } from './utils';
+import { getCurrentMap, mapKeyCode } from './utils';
 import { row, amountLevels } from "./settings";
 import { changeDirection, move, growth, gameOver, nextLevel, win } from './store/action';
 
@@ -56,7 +56,7 @@ export default class Snake {
 
     checkNextLevel() {
         const { score, maps, level } = this.store.getState();
-        const map = maps[`map${level}`];
+        const map = getCurrentMap(maps, level);
 
         if(score >= map.completed && level < amountLevels){
             this.store.dispatch(nextLevel());
@@ -66,7 +66,7 @@ export default class Snake {
 
     checkWin() {
         const { score, maps, level } = this.store.getState();
-        const map = maps[`map${level}`];
+        const map = getCurrentMap(maps, level);
 
         if(score >= map.completed && level >= amountLevels){
             this.store.dispatch(win());
@@ -105,7 +105,7 @@ export default class Snake {
     _getCollisionSnake(headSnake) {
         const { snake, maps, level } = this.store.getState();
         const { tail } = snake;
-        const map = maps[`map${level}`];
+        const map = getCurrentMap(maps, level);
         
         for(let t = 0; t < tail.length; t+=1){
             if(tail[t].x === headSnake.x && tail[t].y === headSnake.y){

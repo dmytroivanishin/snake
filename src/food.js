@@ -1,3 +1,4 @@
+import { getCurrentMap } from './utils';
 import { addFood } from './store/action';
 import { row } from "./settings";
 
@@ -20,9 +21,9 @@ export default class Food {
     
     _getFreeSpace() {
         const { snake, food, maps, level } = this.store.getState();
-        const { tail }      =  snake;
-        const { didAte }    =  food;
-        const map           = maps[`map${level}`];
+        const { tail }      = snake;
+        const { didAte }    = food;
+        const map           = getCurrentMap(maps, level);
         let isNewCordsFood  = true,
             x, y;
     
@@ -31,7 +32,6 @@ export default class Food {
         }
     
         while(isNewCordsFood){
-    
             x =  this._getRandomPosition(row),
             y =  this._getRandomPosition(row);
     
