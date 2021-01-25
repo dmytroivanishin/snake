@@ -4,10 +4,12 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
+const getStyleLoader = (isProd) => isProd ? MiniCssExtractPlugin.loader : "style-loader";
+
 module.exports = (env) => {
     const { mode } = env;
 
-    isDev = mode === "development";
+    isProd = mode === "production";
 
     return {
         mode: mode,
@@ -29,7 +31,7 @@ module.exports = (env) => {
                 {
                     test: /\.scss$/,
                     exclude: /node_modules/,
-                    use: [ !isDev ? MiniCssExtractPlugin.loader : "style-loader", "css-loader", "sass-loader"]
+                    use: [getStyleLoader(isProd), "css-loader", "sass-loader"]
                 }
             ]
         },
@@ -53,6 +55,5 @@ module.exports = (env) => {
         devServer: {
             contentBase: path.resolve(__dirname, "build")
         }
-
     };
 };
