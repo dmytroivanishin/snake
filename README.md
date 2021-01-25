@@ -6,7 +6,7 @@ Game Snake with levels, sounds, and supporting for mobile.
 
 ## Installation
 
-Before installation you need to install [Node.js](https://nodejs.org/en/) on your PC.
+Before installation you need to clone code from repository and install [Node.js](https://nodejs.org/en/) on your PC.
 
 ```
 npm install
