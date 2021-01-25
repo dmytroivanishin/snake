@@ -1,8 +1,6 @@
-let width, height, board, popup, ceil, row, colors, amountLevels;
+const width = 600;
 
-width = 600;
-
-board = {
+const board = {
     width,
     height: 60,
     font: "normal 25px Arial, sans-serif",
@@ -20,18 +18,19 @@ board = {
     }
 };
 
-height = width + board.height;
+const height = width + board.height;
 
-popup = {
+const popup = {
     width: 200,
     height: 100,
     font: "normal 25px Arial, sans-serif"
 };
 
-ceil = 30;
-row = width / ceil;
+const ceil = 30;
 
-colors = {
+const row = width / ceil;
+
+const colors = {
     snakeBody: "#1fb9dd",
     snakeHead: "#00ffff",
     apple: "#d86464",
@@ -40,6 +39,6 @@ colors = {
     popup: "#e0cd1e"
 };
 
-amountLevels = 4;
+const amountLevels = 4;
 
 export { width, height, board, popup, ceil, row, colors, amountLevels };
