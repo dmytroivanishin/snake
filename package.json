@@ -1,12 +1,10 @@
 {
-  "name": "game_snake",
+  "name": "game-snake",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack --env.mode=development",
-    "start:dev": "webpack-dev-server --env.mode=development --open",
+    "start": "webpack-dev-server --env.mode=development --open",
     "build": "webpack --env.mode=production"
   },
   "author": "",
