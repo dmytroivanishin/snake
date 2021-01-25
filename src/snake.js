@@ -114,10 +114,8 @@ export default class Snake {
         }
 
         for(let m = 0; m < map.cords.length; m+=1) {
-            for(let t = 0; t < tail.length; t+=1){
-                if(headSnake.x === map.cords[m].x && headSnake.y === map.cords[m].y) {
-                    return true;
-                }
+            if(headSnake.x === map.cords[m].x && headSnake.y === map.cords[m].y) {
+                return true;
             }
         }
     }
