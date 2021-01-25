@@ -1,3 +1,5 @@
+import * as maps from "./maps";
+
 const width = 600;
 
 const board = {
@@ -39,6 +41,6 @@ const colors = {
     popup: "#e0cd1e"
 };
 
-const amountLevels = 4;
+const amountLevels = Object.keys(maps).length;
 
 export { width, height, board, popup, ceil, row, colors, amountLevels };
