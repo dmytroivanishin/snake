@@ -1,44 +1,41 @@
-const animateRAFInterval = {
-    id: null,
-    start: null,
-    canceled: false,
-    cancel() {
-        if(!this.id){
-            return false;
+const animateRAFInterval = (function(){
+    let id = null, canceled = false;
+
+    const start = (cb) => {
+        if(!cb){
+            throw new Error("Callback function is undefined.");
         }
-        cancelAnimationFrame(this.id);
-        this.id = null;
-        this.canceled = true;
-    }
-};
-
-const startRAFInterval = (cb) => {
-
-    if(!cb){
-        throw new Error("Callback function is undefined.");
-    }
-    if(typeof cb !== "function"){
-        throw new TypeError("Callback is not a function.");
-    }
-    
-    animateRAFInterval.canceled = false;
-    
-    const animate = (time) => {
-
-        cb(time);
-        
-        if(!animateRAFInterval.canceled){
-            animateRAFInterval.id = requestAnimationFrame(animate);
+        if(typeof cb !== "function"){
+            throw new TypeError("Callback is not a function.");
         }
-        
+
+        canceled = false;
+
+        const animate = (time) => {
+            cb(time);
+            
+            if(!canceled){
+                id = requestAnimationFrame(animate);
+            }
+        };
+    
+        if(!canceled){
+            id = requestAnimationFrame(animate);
+        }
     };
 
-    if(!animateRAFInterval.canceled){
-        animateRAFInterval.id = requestAnimationFrame(animate);
-    }
-    
-};
+    const cancel = () => {
+        if(!id){
+            return false;
+        }
+        
+        cancelAnimationFrame(id);
 
-animateRAFInterval.start = startRAFInterval;
+        id = null;
+        canceled = true;
+    };
+
+    return { start, cancel };
+}());
 
 export default animateRAFInterval;
