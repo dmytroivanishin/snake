@@ -12,7 +12,7 @@ Before installation you need to install [Node.js](https://nodejs.org/en/) on you
 npm install
 ```
 
-## Runs game into development
+## Runs game in development
 
 ```
 npm run start
