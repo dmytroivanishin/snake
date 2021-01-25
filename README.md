@@ -2,11 +2,11 @@
 
 Game Snake with levels, sounds, and supporting for mobile.
 
-<a href="https://dmytroivanishin.github.io/snake/" target="_blank">Run demo</a>
+[Run demo](https://dmytroivanishin.github.io/snake/)
 
 ## Installation
 
-Before installation you need to install <a href="https://nodejs.org/en/" target="_blank">Node.js</a> on your PC.
+Before installation you need to install [Node.js](https://nodejs.org/en/) on your PC.
 
 ```
 npm install
