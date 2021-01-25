@@ -126,19 +126,18 @@ export default class Snake {
         const rowEdge = row - 1;
 
         if(newHeadSnake.x > rowEdge && direction === "right"){
-            return { x: 0, y: newHeadSnake.y, d: direction, h: true };
+            return { ...newHeadSnake, x: 0 };
         }
         if(newHeadSnake.x < 0 && direction === "left"){
-            return { x: rowEdge, y: newHeadSnake.y, d: direction, h: true };
+            return { ...newHeadSnake, x: rowEdge };
         }
         if(newHeadSnake.y < 0 && direction === "up"){
-            return { x: newHeadSnake.x, y: rowEdge, d: direction, h: true };
+            return { ...newHeadSnake, y: rowEdge };
         }
         if(newHeadSnake.y > rowEdge && direction === "down"){
-            return { x: newHeadSnake.x, y: 0, d: direction, h: true };
+            return { ...newHeadSnake, y: 0 };
         }
-
-        return { x: newHeadSnake.x, y: newHeadSnake.y, d: direction, h: true };
+    
+        return { ...newHeadSnake };
     }
-
 };
