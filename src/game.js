@@ -40,11 +40,9 @@ export default class Game {
         let startTime       = 0,
             currentTime     = 0,
             time            = 0,
-            previosSecond   = 0,
             currentSecond   = 0;
 
         animateRAFInterval.start(() => {
-
             if(startTime === 0){
                 startTime = new Date().getTime();
             }
@@ -53,10 +51,8 @@ export default class Game {
             time            = currentTime - startTime;
             currentSecond   = Math.floor(time / this.state.snake.speed);
 
-            if(previosSecond < currentSecond){
-
+            if(currentSecond > 0){
                 startTime = 0;
-                previosSecond = 0;
 
                 if(this.state.gameStart){
 
