@@ -1,7 +1,6 @@
 # Snake
-[Demo](https://dimaiv95.github.io/snake/index.html)
 
----
+[Demo](https://dmytroivanishin.github.io/snake/)
 
 ![Level 1](https://raw.githubusercontent.com/dimaiv95/dimaiv95.github.io/master/snake/level_1_full.jpg)
 ![Level 2](https://raw.githubusercontent.com/dimaiv95/dimaiv95.github.io/master/snake/level_2_full.jpg)
